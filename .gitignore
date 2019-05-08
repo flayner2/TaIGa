@@ -9,3 +9,6 @@ all_plastids.gbff
 log.txt
 names.txt
 input/tax_report.csv
+input/TaIGa_missing.txt
+outfiles/taiga/TaIGa_missing.txt
+outfiles/taiga/TaIGa_result.csv
