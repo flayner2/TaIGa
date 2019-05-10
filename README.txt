@@ -32,7 +32,7 @@ If you want further information on how to run TaIGa and what are the required an
 
 --same: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with multiple records from multiple, different organisms, to expect multiple records but all from the same organism. Do take care though: if your file has multiple records from different organisms and it also happens to have more than one record for the same organism, this mode won't work as expected. This will only take the first organism on the genome file and ignore all other records. If your file falls into this situation, run TaIGa in default mode (it is advisible to edit your input file before doing so, removing the duplicates). Eg.: this mode is useful if your genome file contains three 'Apis mellifera' records (each one with the DNA sequence of a cromosome). It is not useful, though, if your genome file contains three 'Apis mellifera' records and two 'Homo sapiens' records. It will only consider the first record it finds.
 
---name: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file of any sort, to instead expect a simple test file with a collection of organism names, all separated by line (linebreaks). Organism names, in this context, refer to any valid taxonomic level available on NCBI's Taxonomy database.
+--name: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file of any sort, to expect a simple text file with a collection of organism names, all separated by line (linebreaks). Organism names, in this context, refer to any valid taxonomic level available on NCBI's Taxonomy database.
 
 ## TaIGa's Outputs:
 
