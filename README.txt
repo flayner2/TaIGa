@@ -36,7 +36,7 @@ If you want further information on how to run TaIGa and what are the required an
 
 ## TaIGa's Outputs:
 
-If TaIGa runs successfuly, it will print a message to the screen to inform so. There is no '-v' or '--verbose' option, so there's no way (yet) to disable TaIGas chit-chat. One way of working around this is to run TaIGa and send its output to a placeholder file, like so:
+If TaIGa runs successfuly, it will print a message to the screen to inform so. There is no '-v' or '--verbose' option, so there's no way (yet) to disable TaIGa's chit-chat. One way of working around this is to run TaIGa and send its output to a placeholder file, like so:
     
     $ python3 TaIGa.py [input file] [output path] [e-mail] > log.txt
 
