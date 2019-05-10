@@ -28,7 +28,7 @@ If you want further information on how to run TaIGa and what are the required an
 
 ## Optional Arguments (use only one per TaIGa run):
 
---single: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with a collection of records of any sort, to expect only one record on the said file. This is, TaIGa, when run with this option on, will only accept your input file if it only and no more than one record. Check your file closely before using this option. TaIGa will know.
+--single: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with a collection of records of any sort, to expect only one record on the said file. This is, TaIGa, when run with this option on, will only accept your input file if has it only and no more than one record. Check your file closely before using this option. TaIGa will know.
 
 --same: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with multiple records from multiple, different organisms, to expect multiple records but all from the same organism. Do take care though: if your file has multiple records from different organisms and it also happens to have more than one record for the same organism, this mode won't work as expected. This will only take the first organism on the genome file and ignore all other records. If your file falls into this situation, run TaIGa in default mode (it is advisible to edit your input file before doing so, removing the duplicates). Eg.: this mode is useful if your genome file contains three 'Apis mellifera' records (each one with the DNA sequence of a cromosome). It is not useful, though, if your genome file contains three 'Apis mellifera' records and two 'Homo sapiens' records. It will only consider the first record it finds.
 
@@ -54,7 +54,7 @@ As TaIGa depends on Entrez to function, it means that it also depends on NCBI's 
 
 TaIGa is free to use, free to distribute and free to modify. TaIGa is a rather simple script and didn't take me much time to build it. It also depens heavily on pre-built modules to work properly. Being so, I won't ever complain if someone would take TaIGa and build, on top of it, a more sofisticated or efficient version of it and call it theirs. That said, I was very happy and accomplished when I finally had a stable version of TaIGa at hand, and I feel very proud of it. Because of that, I kindly ask that, if you want to use TaIGa for your work or want to build something on top of it, please, cite the original script and my name as its creator.
 
-TaIGa's repository has an examples folder on it. On that folder, you'll find an input file named 'names.txt' and both an output file and a missing information file. Those were run with the '--name' option on.
+TaIGa's repository has an 'examples' folder on it. On that folder, you'll find an input file named 'names.txt' and both an output file and a missing information file. Those were run with the '--name' option on.
 
 As said in the introduction, another inspiration for TaIGa's name is the cute romance anime character Taiga, from the japanese animation ToraDora. I highly recommend it.
 
