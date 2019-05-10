@@ -1,5 +1,7 @@
-# TaIGa - Taxonomy Information Gatherer
-# Author: Maycon D. Oliveira
+################################################################################################################################
+"""                                          TaIGa - TAxonomy Information GAtherer
+This is a simple script that interacts with various utilities from the NCBI's Entrez api in order to retrieve relevant taxonomic information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format genome files, as well as a text file format list of organism names, separated by lines. TaIGa recieves a file as input, an output folder path, a valid user e-mail and one optional argument to identify the type of input file. TaIGa then uses Entrez to retrieve the TaxID, Genome ID and all taxonomic information of all taxa up to the organism name provided. Then, it builds a DataFrame and outputs it to a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass taxonomical metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big collection of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You should watch it. 
+                        TaIGa was developed and is maintained by Maycon Douglas de Oliveira - 2019                          """
 
 import os
 import sys
@@ -115,6 +117,19 @@ print("""*********************************************
 *   TaIGa - Taxonomy Information Gatherer   *
 *                                           *
 *********************************************""")
+
+if not os.path.exists(
+        output_path):  # Checking if provided output path is valid
+    sys.exit(
+        "\nERROR: The provided output folder is not a valid path. It doesn't need to be created, but the path must be valid. Check it and run TaIGa again.."
+    )
+
+# Checking if only one optional argument was passed to TaIGa
+if (args.name and args.same) or (args.name and args.single) or (args.single
+                                                                and args.same):
+    sys.exit(
+        "\nERROR: Please run TaIGa with only one of the possible optional arguments."
+    )
 
 # First checking if input file is a simple list of names
 if args.name:
@@ -348,9 +363,6 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
         print(
             "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
             .format(names))
-
-# print(missing_corrected)
-# print(missing_taxid)
 
 try:
     # Check for the organisms with missing corrected name or taxid and remove their name form the names list

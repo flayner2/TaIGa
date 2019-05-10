@@ -7,7 +7,6 @@ testfile
 GCF_003254395.2_Amel_HAv3.1_genomic.gbff
 all_plastids.gbff
 log.txt
-names.txt
 input/tax_report.csv
 input/TaIGa_missing.txt
 outfiles/taiga/TaIGa_missing.txt
