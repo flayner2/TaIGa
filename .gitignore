@@ -11,3 +11,6 @@ input/tax_report.csv
 input/TaIGa_missing.txt
 outfiles/taiga/TaIGa_missing.txt
 outfiles/taiga/TaIGa_result.csv
+example/names.txt
+input/names.txt
+outfiles/taiga/example/TaIGa_result.csv

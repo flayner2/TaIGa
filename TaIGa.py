@@ -7,6 +7,7 @@ import os
 import sys
 import argparse
 import pandas as pd
+from collections import OrderedDict
 from Bio import Entrez
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
@@ -118,12 +119,6 @@ print("""*********************************************
 *                                           *
 *********************************************""")
 
-if not os.path.exists(
-        output_path):  # Checking if provided output path is valid
-    sys.exit(
-        "\nERROR: The provided output folder is not a valid path. It doesn't need to be created, but the path must be valid. Check it and run TaIGa again.."
-    )
-
 # Checking if only one optional argument was passed to TaIGa
 if (args.name and args.same) or (args.name and args.single) or (args.single
                                                                 and args.same):
@@ -227,6 +222,14 @@ else:  # Multiple records from multiple organisms
         sys.exit(
             "\nERROR: Something went wrong while trying to parse the input file. Check the file and the program execution commands and try again.\n"
         )
+
+# Done getting all names. Checking for duplicates.
+print(
+    "\n>> Ignore if any duplicate name was printed. Checking and removing duplicate names."
+)
+
+names = list(dict.fromkeys(
+    names))  # Using Python's collections module to uniquefy all names in list
 
 # Done collecting all organism names from the input file. Print a message indicating the next step.
 print("\n>> Searching for taxonomic information...\n")
@@ -462,7 +465,11 @@ try:
     # Check if the output directory exists. If not, create it.
     if not os.path.exists(output_path):
         print("\n>> Creating output folder")
-        os.makedirs(output_path)
+        try:  # Checking if the path for the output folder is valid
+            os.makedirs(output_path)
+        except:
+            print(
+                "\nERROR: Path to output folder may not be valid. Try again.")
 
     print(
         "\n>> Creating output file. You'll find it inside the provided output folder, named 'TaIGa_result.csv'"
