@@ -263,7 +263,11 @@ if type(names) == list:
         try:
             print("> Searching TaxID of organism '{}'".format(name))
             t_id = search(user_email, "taxonomy", correct_name)
-            g_id = search(user_email, "genome", correct_name)
+            try:
+                g_id = search(user_email, "genome", correct_name)
+            except (IndexError):
+                pass
+                g_id = '-'
             print(" >>>> TaxID for '{}' : '{}'\n".format(correct_name, t_id))
         except (IndexError):
             pass
@@ -328,7 +332,10 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
     try:
         print("> Searching TaxID of organism '{}'".format(names))
         t_id = search(user_email, "taxonomy", correct_name)
-        g_id = search(user_email, "genome", correct_name)
+        try:
+            g_id = search(user_email, "genome", correct_name)
+        except (IndexError):
+            g_id = '-'
         print(" >>>> TaxID for '{}' : '{}'\n".format(correct_name, t_id))
     except (IndexError):
         pass
