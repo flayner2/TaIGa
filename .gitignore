@@ -14,3 +14,13 @@ outfiles/taiga/TaIGa_result.csv
 example/names.txt
 input/names.txt
 outfiles/taiga/example/TaIGa_result.csv
+.vscode/launch.json
+log
+outfiles/TaIGa_result.csv
+outfiles/taiga/chico/TaIGa_result.csv
+outfiles/taiga/chico/missing/TaIGa_missing.txt
+outfiles/taiga/chico/TaIGa_result.ods
+outfiles/taiga/chico/missing/TaIGa_result.csv
+outfiles/taiga/chico/missing/names.txt
+outfiles/taiga/chico/missing/missing_taxid/TaIGa_missing.txt
+outfiles/taiga/chico/missing/missing_taxid/TaIGa_result.csv

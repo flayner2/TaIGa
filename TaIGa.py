@@ -1,7 +1,15 @@
 ################################################################################################################################
 """                                          TaIGa - TAxonomy Information GAtherer
-This is a simple script that interacts with various utilities from the NCBI's Entrez api in order to retrieve relevant taxonomic information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format genome files, as well as a text file format list of organism names, separated by lines. TaIGa recieves a file as input, an output folder path, a valid user e-mail and one optional argument to identify the type of input file. TaIGa then uses Entrez to retrieve the TaxID, Genome ID and all taxonomic information of all taxa up to the organism name provided. Then, it builds a DataFrame and outputs it to a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass taxonomical metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big collection of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You should watch it. 
+This is a simple script that interacts with various utilities from the NCBI's Entrez api in order to retrieve relevant taxonomic
+information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format genome files, as
+well as a text file format list of organism names, separated by lines. TaIGa recieves a file as input, an output folder path, a valid user e-mail and one optional argument to identify the type of input file. TaIGa then uses Entrez to retrieve the TaxID, 
+Genome ID and all taxonomic information of all taxa up to the organism name provided. Then, it builds a DataFrame and outputs it
+to a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass 
+taxonomical metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big collection 
+of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You should watch 
+it. 
                         TaIGa was developed and is maintained by Maycon Douglas de Oliveira - 2019                          """
+################################################################################################################################
 
 import os
 import sys
@@ -90,6 +98,11 @@ taiga.add_argument(
     "--name",
     help=
     "Use this option if you want to give TaIGa a list of species names. When using this option, give TaIGa a list of species names in a text file, separated by line (linebreaks).",
+    action="store_true")
+taiga.add_argument(
+    "-c",
+    help=
+    "Use this to disable TaIGa's name correcting function. Sometimes, this function will alter organism names unecessarily and thus result in missing information returned (which could be misleading).",
     action="store_true")
 
 # Parsing the program arguments
@@ -238,29 +251,33 @@ print("\n>> Searching for taxonomic information...\n")
 if type(names) == list:
     for name in names:
         # Use Entrez.espell to correct the spelling of organism names
-        try:
-            print("> Correcting organism name of '{}'".format(name))
-            correct_name = correct_spell(user_email, name)
-            if len(correct_name) == 0:
+        if not args.c:
+            try:
+                print("> Correcting organism name of '{}'".format(name))
+                correct_name = correct_spell(user_email, name)
+                if len(correct_name) == 0:
+                    print(
+                        "\n\t>> Couldn't find the correct organism name for '{}'\n"
+                        .format(name))
+                    missing_corrected.append(name)
+            except (RuntimeError):
+                pass
                 print(
                     "\n\t>> Couldn't find the correct organism name for '{}'\n"
                     .format(name))
                 missing_corrected.append(name)
-        except (RuntimeError):
-            pass
-            print("\n\t>> Couldn't find the correct organism name for '{}'\n".
-                  format(name))
-            missing_corrected.append(name)
-        except (KeyboardInterrupt):
-            sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
-        except:
-            pass
-            print(
-                "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'.\n"
-                .format(name))
-            missing_corrected.append(name)
+            except (KeyboardInterrupt):
+                sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
+            except:
+                pass
+                print(
+                    "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'.\n"
+                    .format(name))
+                missing_corrected.append(name)
         # Search Taxonomy for the TaxID of the input organism names and Genome for the GenomeID
         try:
+            if args.c:
+                correct_name = name
             print("> Searching TaxID of organism '{}'".format(name))
             t_id = search(user_email, "taxonomy", correct_name)
             try:
@@ -307,29 +324,32 @@ if type(names) == list:
                 .format(name))
 else:  # If there's only one record, or only one organism, a loop isn't needed
     # Use Entrez.espell to correct the spelling of organism names
-    try:
-        print("> Correcting organism name of '{}'".format(names))
-        correct_name = correct_spell(user_email, names)
-        if len(correct_name) == 0:
+    if not args.c:
+        try:
+            print("> Correcting organism name of '{}'".format(names))
+            correct_name = correct_spell(user_email, names)
+            if len(correct_name) == 0:
+                print(
+                    "\n\t>> Couldn't find the correct organism name for '{}'\n"
+                    .format(names))
+                missing_corrected.append(names)
+        except (RuntimeError):
+            pass
             print("\n\t>> Couldn't find the correct organism name for '{}'\n".
                   format(names))
             missing_corrected.append(names)
-    except (RuntimeError):
-        pass
-        print(
-            "\n\t>> Couldn't find the correct organism name for '{}'\n".format(
-                names))
-        missing_corrected.append(names)
-    except (KeyboardInterrupt):
-        sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
-    except:
-        pass
-        print(
-            "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'\n"
-            .format(names))
-        missing_corrected.append(names)
+        except (KeyboardInterrupt):
+            sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
+        except:
+            pass
+            print(
+                "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'\n"
+                .format(names))
+            missing_corrected.append(names)
     # Search Taxonomy for the TaxID of the input organism names and Genome for the GenomeID
     try:
+        if args.c:
+            correct_name = names
         print("> Searching TaxID of organism '{}'".format(names))
         t_id = search(user_email, "taxonomy", correct_name)
         try:
@@ -375,10 +395,11 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
             .format(names))
 
 try:
-    # Check for the organisms with missing corrected name or taxid and remove their name form the names list
-    for missed in missing_corrected:
-        if missed in names:
-            names.remove(missed)
+    if not args.c:
+        # Check for the organisms with missing corrected name or taxid and remove their name form the names list
+        for missed in missing_corrected:
+            if missed in names:
+                names.remove(missed)
     for missed in missing_taxid:
         if missed in names:
             names.remove(missed)
@@ -500,10 +521,10 @@ try:
                     missing_file.write("\t\t\t{}\n".format(taxid))
 except (KeyboardInterrupt):
     sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
-except:
-    sys.exit(
-        "\nQUIT: Unknown error occured while generating output files. Try checking your inputs and running TaIGa again."
-    )
+# except:
+#     sys.exit(
+#         "\nQUIT: Unknown error occured while generating output files. Try checking your inputs and running TaIGa again."
+#     )
 
 print(
     "\n>> TaIGa was run successfully! You can check your results on the informed output folder. If there's any missing data, check the 'TaIGa_missing.txt' file on the same folder.\n"
