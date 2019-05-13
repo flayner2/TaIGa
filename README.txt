@@ -64,7 +64,7 @@ records and two 'Homo sapiens' records. It will only consider the first record i
 text file with a collection of organism names, all separated by line (linebreaks). Organism names, in this context, refer to any 
 valid taxonomic level available on NCBI's Taxonomy database.
 
--c: This disables TaIGa name correcting functionality. The usefulness of this is discussed below.
+-c: This disables TaIGa's name correcting functionality. The usefulness of this is discussed below.
 
 ## TaIGa's Outputs:
 
