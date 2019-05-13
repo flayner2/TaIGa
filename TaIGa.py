@@ -521,10 +521,9 @@ try:
                     missing_file.write("\t\t\t{}\n".format(taxid))
 except (KeyboardInterrupt):
     sys.exit("\nQUIT: TaIGa was stopped by the user.\n")
-# except:
-#     sys.exit(
-#         "\nQUIT: Unknown error occured while generating output files. Try checking your inputs and running TaIGa again."
-#     )
+except:
+    sys.exit("\nQUIT: Unknown error occured while generating output files: {}".
+             format(sys.exc_info()[0]))
 
 print(
     "\n>> TaIGa was run successfully! You can check your results on the informed output folder. If there's any missing data, check the 'TaIGa_missing.txt' file on the same folder.\n"
