@@ -46,7 +46,9 @@ check the code yourself to confirm this). TaIGa only requires this field because
 sending requests to Entrez. This is all TaIGa will use the e-mail for. You may pass on gibberish, if you so want, but I advise 
 you not to. TaIGa will run fine anyways, as long as you provide something to this argument field.
 
-## Optional Arguments (use only one per TaIGa run):
+## Optional Arguments:
+
+### Input Modes (use only one per TaIGa run):
 
 --single: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with a collection of records of 
 any sort, to expect only one record on the said file. This is, TaIGa, when run with this option on, will only accept your input 
@@ -64,17 +66,21 @@ records and two 'Homo sapiens' records. It will only consider the first record i
 text file with a collection of organism names, all separated by line (linebreaks). Organism names, in this context, refer to any 
 valid taxonomic level available on NCBI's Taxonomy database.
 
+### Other Options:
+
 -c: This disables TaIGa's name correcting functionality. The usefulness of this is discussed below.
+
+-t: This sets the maximum number of retries TaIGa will do when fetching for taxonomic information for an organism. This can be 
+very useful as Entrez will many times return broken responses. Default: 5.
+
+-v: This disables TaIGa's standard verbose mode. If you use this option, TaIGa will print to the screen no more. Instead, it 
+will automatically generate a log file called 'TaIGa_run.log' inside the folder TaIGa is in. This log file will contain all 
+information about that particular TaIGa run.
 
 ## TaIGa's Outputs:
 
-If TaIGa runs successfuly, it will print a message to the screen to inform so. There is no '-v' or '--verbose' option, so 
-there's no way (yet) to disable TaIGa's chit-chat. One way of working around this is to run TaIGa and send its output to a 
-placeholder file, like so:
-    
-    $ python3 TaIGa.py [input file] [output path] [e-mail] > log.txt
-
-This will create a 'log' file with everything TaIGa would normally print on the screen, and TaIGa will print no more.
+If TaIGa runs successfuly, it will print a message to the screen to inform so (or log it to a file if you have the '-v' option 
+turned on).
 
 After running successfuly, TaIGa will create at least one file at the informed output folder. If the output folder doesn't exist 
 (or its parent folders), TaIGa will check it and create them for you. Do note that you still need to provide a valid path for 
