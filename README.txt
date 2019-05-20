@@ -29,8 +29,7 @@ If you want further information on how to run TaIGa and what are the required an
 ## Positional (required) Arguments:
 
 [input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a Genbank 
-format genome file with multiple records for multiple different organisms (repetitions allowed, but as of this version TaIGa 
-will not check for them - this checking is to be implemented very soon). You can change this behaviour so TaIGa would expect: a 
+format genome file with multiple records for multiple different organisms. You can change this behaviour so TaIGa would expect: a 
 Genbank format genome file with multiple records, all from the same organism; a Genbank format genome file with only one record; 
 or a text file with organism names separated by line. Organism names refer to any valid taxonomic level that is available on 
 NCBI's Taxonomy database.
