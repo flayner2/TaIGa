@@ -19,9 +19,8 @@ import logging as log
 from time import sleep
 from random import randint
 from collections import OrderedDict
-from Bio import Entrez
+from Bio import Entrez, SeqIO
 from Bio.SeqRecord import SeqRecord
-from Bio import SeqIO
 
 
 def organize_tax_info(user_email, orgs_dict, retries):
@@ -288,14 +287,14 @@ log.info(
     "\n>> Ignore if any duplicate name was printed. Checking and removing duplicate names."
 )
 
-names = list(dict.fromkeys(
-    names))  # Using Python's collections module to uniquefy all names in list
-
 # Done collecting all organism names from the input file. Print a message indicating the next step.
 log.info("\n>> Searching for taxonomic information...\n")
 
 # Checking if there are multiple records on the file (for different organisms)
 if type(names) == list:
+    names = list(
+        dict.fromkeys(names)
+    )  # Using Python's collections module to uniquefy all names in list
     for name in names:
         # Use Entrez.espell to correct the spelling of organism names
         if not args.c:
@@ -538,7 +537,13 @@ try:
             tmp_orgn)  # Append that organism dictionary to the final list
 
     # Create a DataFrame with the results. The values come from final_info, the names of the organisms are the indexes for the rows and the taxonomic ranks in ranks are the labels for the columns
-    frame = pd.DataFrame(final_info, index=names, columns=ranks)
+    if type(names) == list:  # Checking if names is a list
+        frame = pd.DataFrame(final_info, index=names, columns=ranks)
+    else:  # If it's not, make it a list so Pandas can use it as indexes for the rows of the DataFrame
+        names_list = []
+        names_list.append(names)
+        frame = pd.DataFrame(final_info, index=names_list, columns=ranks)
+
     # Transform the missing data to a more visual indicator for the user
     frame.fillna('-', inplace=True)
 
