@@ -15,7 +15,8 @@ it.
 ## Dependencies:
     
     -Python 3.x, preferably 3.6
-    -Biopython version 1.73 or newer (and all of its dependancies, obviously)
+    -Biopython version 1.73 or newer (and all of its dependencies, obviously)
+    -Pandas version 0.24.2 or newer (and all of its dependencies, obviously)
     -An internet connection
 
 ## How to run:
