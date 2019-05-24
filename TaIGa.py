@@ -80,7 +80,7 @@ def retrive_taxonomy(user_email, tax_id, retries):
 #Taking the user input from the command line. The path to the input file and the path to the output folder. Both are taken from stdin. Aditional options let TaIGa understand the format of the input.
 taiga = argparse.ArgumentParser(
     description=
-    "TaIGa retrieves metadata of an organism (or a collection of organisms) from a Genbank format genome file or a list of names."
+    "TaIGa retrieves metadata of an organism (or a collection of organisms) from a text file format list of names or a Genbank format genome file."
 )
 taiga.add_argument(
     "input",
@@ -107,9 +107,9 @@ taiga.add_argument(
     "Use this if the input genome file contains multiple records but all for the same organism (eg. multiple scaffolds for the same 'Apis mellifera' genome). Don't use this if your input file has multiple records for different organisms, even if one or another is repeated (eg. Genbank file with two 'Apis mellifera' records, one 'Bombus impatiens' record and one 'Homo sapiens' record).",
     action="store_true")
 taiga.add_argument(
-    "--name",
+    "--multi",
     help=
-    "Use this option if you want to give TaIGa a list of species names. When using this option, give TaIGa a list of species names in a text file, separated by line (linebreaks).",
+    "Use this option if you want to run TaIGa from a Genbank format genome file with multiple records from multiple different organisms. TaIGa does check for duplicate names and automatically removes them.",
     action="store_true")
 taiga.add_argument(
     "-c",
@@ -163,32 +163,51 @@ log.info("""*********************************************
 *********************************************""")
 
 # Checking if only one optional argument was passed to TaIGa
-if (args.name and args.same) or (args.name and args.single) or (args.single
-                                                                and args.same):
+if (args.multi and args.same) or (args.multi
+                                  and args.single) or (args.single
+                                                       and args.same):
     log.error(
         "\nERROR: Please run TaIGa with only one of the possible input type optional arguments."
     )
     sys.exit()
 
-# First checking if input file is a simple list of names
-if args.name:
+# First checking if input file is a genome file with multiple records from multiple organisms
+if args.multi:
+    name_counter = 0
+    log.info(
+        "\n>> Parsing input as a Genbank file with multiple records for multiple organisms.\n"
+    )
     try:
-        log.info("\n>> Parsing input file a simple list of species names.\n")
-        with open(input_path, "r") as list_of_names:
-            names = list_of_names.readlines(
-            )  # Take the names of the organisms
-            for name in range(len(names)):
-                names[name] = names[name].replace(
-                    "\n", "")  # Correct the formatting of each name
-                log.info("{} ---> All OK".format(names[name]))
+        records = SeqIO.parse(input_path, "genbank")
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user.\n")
         sys.exit()
     except:
         log.error(
-            "\nERROR: Couldn't parse name list. Check your file an try running TaIGa again.\n"
+            "\nERROR: Couldn't parse input genome file. Check your file and try running TaIGa again.\n"
         )
         sys.exit()
+    names = [seq.annotations["organism"]
+             for seq in records]  # List the names of all organisms
+    if names:
+        log.info(
+            "\n>> All OK with parsing the input file. Checking the records...\n"
+        )
+        for name in names:
+            name_counter += 1
+            if name:
+                log.info("> '{}' ---> All OK".format(name))
+            else:
+                log.info(
+                    ">> Something went wrong while trying to retrieve the organism name of record number '{}'"
+                    .format(name_counter))
+                continue
+    else:
+        log.error(
+            "\nERROR: Something went wrong while trying to parse the input file. Check the file and the program execution commands and try again.\n"
+        )
+        sys.exit()
+
 # Else, checking the type of input Genbank file
 elif args.single:  # Single record on Genbank file
     try:
@@ -245,39 +264,22 @@ elif args.same:  # Multiple records from the same organism
             "\nERROR: Something went wrong while trying to parse the input file. Check the file and the program execution commands and try again.\n"
         )
         sys.exit()
-else:  # Multiple records from multiple organisms
-    name_counter = 0
-    log.info(
-        "\n>> Parsing input as a Genbank file with multiple records for multiple organisms.\n"
-    )
+else:  # Simple text file with a list of organism names
     try:
-        records = SeqIO.parse(input_path, "genbank")
+        log.info("\n>> Parsing input file a simple list of species names.\n")
+        with open(input_path, "r") as list_of_names:
+            names = list_of_names.readlines(
+            )  # Take the names of the organisms
+            for name in range(len(names)):
+                names[name] = names[name].replace(
+                    "\n", "")  # Correct the formatting of each name
+                log.info("{} ---> All OK".format(names[name]))
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user.\n")
         sys.exit()
     except:
         log.error(
-            "\nERROR: Couldn't parse input genome file. Check your file and try running TaIGa again.\n"
-        )
-        sys.exit()
-    names = [seq.annotations["organism"]
-             for seq in records]  # List the names of all organisms
-    if names:
-        log.info(
-            "\n>> All OK with parsing the input file. Checking the records...\n"
-        )
-        for name in names:
-            name_counter += 1
-            if name:
-                log.info("> '{}' ---> All OK".format(name))
-            else:
-                log.info(
-                    ">> Something went wrong while trying to retrieve the organism name of record number '{}'"
-                    .format(name_counter))
-                continue
-    else:
-        log.error(
-            "\nERROR: Something went wrong while trying to parse the input file. Check the file and the program execution commands and try again.\n"
+            "\nERROR: Couldn't parse name list. Check your file an try running TaIGa again.\n"
         )
         sys.exit()
 
@@ -331,7 +333,8 @@ if type(names) == list:
             except (IndexError):
                 pass
                 g_id = '-'
-            log.info(" >>>> TaxID for '{}' : '{}'\n".format(correct_name, t_id))
+            log.info(" >>>> TaxID for '{}' : '{}'\n".format(
+                correct_name, t_id))
         except (IndexError):
             pass
             log.warning(
@@ -383,8 +386,9 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
                 missing_corrected.append(names)
         except (RuntimeError):
             pass
-            log.warning("\n\t>> Couldn't find the correct organism name for '{}'\n".
-                  format(names))
+            log.warning(
+                "\n\t>> Couldn't find the correct organism name for '{}'\n".
+                format(names))
             missing_corrected.append(names)
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")

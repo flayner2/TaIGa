@@ -29,11 +29,11 @@ If you want further information on how to run TaIGa and what are the required an
 
 ## Positional (required) Arguments:
 
-[input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a Genbank 
-format genome file with multiple records for multiple different organisms. You can change this behaviour so TaIGa would expect: a 
-Genbank format genome file with multiple records, all from the same organism; a Genbank format genome file with only one record; 
-or a text file with organism names separated by line. Organism names refer to any valid taxonomic level that is available on 
-NCBI's Taxonomy database.
+[input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a list of 
+organism names separated by line in a text-like file. You can change this behaviour so TaIGa would expect: a Genbank format 
+genome file with multiple records, all from the same organism; a Genbank format genome file with only one record; or a Genbank 
+format genome file with multiple records from multiple organisms. Organism names refer to any valid taxonomic level that is 
+available on NCBI's Taxonomy database.
 
 [output path]: This is the full path to the output folder. This is where TaIGa will automatically create the output file, 
 discussed below, and the missing file (also discussed below) if there is need for one. This folder must be a valid path on your 
@@ -50,21 +50,20 @@ you not to. TaIGa will run fine anyways, as long as you provide something to thi
 
 ### Input Modes (use only one per TaIGa run):
 
---single: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with a collection of records of 
-any sort, to expect only one record on the said file. This is, TaIGa, when run with this option on, will only accept your input 
-file if it has only and no more than one record. Check your file closely before using this option. TaIGa will know.
+--single: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect only one record on the said file. 
+This is, TaIGa, when run with this option on, will only accept your input file if it has only and no more than one record. Check 
+your file closely before using this option. TaIGa will know.
 
---same: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file with multiple records from multiple,
-different organisms, to expect multiple records but all from the same organism. Do take care though: if your file has multiple 
-records from different organisms and it also happens to have more than one record for the same organism, this mode won't work 
-as expected. This will only take the first organism on the genome file and ignore all other records. If your file falls into 
-this situation, run TaIGa in default mode. Eg.: this mode is useful if your genome file contains three 'Apis mellifera' records 
-(each one with the DNA sequence of a cromosome). It is not useful, though, if your genome file contains three 'Apis mellifera' 
-records and two 'Homo sapiens' records. It will only consider the first record it finds.
+--same: This changes TaIGa's behaviour to, instead of expecting a list of names to expect multiple records but all from the same 
+organism. Do take care though: if your file has multiple records from different organisms and it also happens to have more than 
+one record for the same organism, this mode won't work as expected. This will only take the first organism on the genome file 
+and ignore all other records. If your file falls into this situation, run TaIGa in default mode. Eg.: this mode is useful if 
+your genome file contains three 'Apis mellifera' records (each one with the DNA sequence of a cromosome). It is not useful, 
+though, if your genome file contains three 'Apis mellifera' records and two 'Homo sapiens' records. It will only consider the 
+first record it finds.
 
---name: This changes TaIGa's behaviour to, instead of expecting a Genbank format genome file of any sort, to expect a simple 
-text file with a collection of organism names, all separated by line (linebreaks). Organism names, in this context, refer to any 
-valid taxonomic level available on NCBI's Taxonomy database.
+--multi: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect a Genbank format genome file with 
+multiple records from multiple, different organisms. TaIGa does check for duplicate names and ignores them.
 
 ### Other Options:
 
@@ -101,7 +100,7 @@ now, so expect some perfectly normal organism names to, sometimes, appear on the
 
 ## Handling Missing TaxID/Corrected Names:
 
-TaIGa now has another command line optional argument (flag), the '-c' option. This will disable TaIGa's name correcting function,
+TaIGa has a certain command line optional argument (flag), the '-c' option. This will disable TaIGa's name correcting function,
 so TaIGa will search for an organism's TaxID without trying to correct its name. Why is this useful?
 
 First of all, when you run TaIGa for a large list of organisms, there's a good chance you'll get a 'TaIGa_missing' file, probably
@@ -110,7 +109,7 @@ themselves. Sometimes, requests will return broken responses, and TaIGa isn't ve
 assume that the particular information it was trying to get is missing. This has a lot to do with the (lack of) stability of 
 NCBI's servers and the Entrez api itself, but also has to do with the sensitivity of Entrez's search functionality. One way of 
 handling a big number of organisms with missing data is to go to the output 'TaIGa_missing' file, get all the names there and 
-simply run TaIGa again (don't bother with duplicates, you may leave them there, as TaIGa is now smart enough to handle them). 
+simply run TaIGa again (don't bother with duplicates, you may leave them there, as TaIGa is smart enough to handle them). 
 This will, sometimes, at least reduce the number of organisms with missing data (because this is a countermeasure to broken 
 responses). You may have to repeat this several times.
 
@@ -131,6 +130,16 @@ highly depending on date and time. For working hours in the US, it is common tha
 form the server get very slow. Still on that, TaIGa requires an internet connection to work and its running time will vary 
 according to the speed of your connection. Those variables aren't something I can easily go around, so have that in mind when 
 using TaIGa. And, last but not least, TaIGa will obviously take longer to run if you have a lot of organisms.
+
+Don't run TaIGa with Python2.7 or earlier versions. In fact, prefer running TaIGa with Python3.6x. The reason behind this is how 
+differently Python3 and Python2 handle iterable objects like sets and dictionaries. In Python2.x, those objects are not ordered, 
+meaning you cannot trust that the order by which you added elements to it will be maintained for further operations. In Python3, 
+however, those iterables are ordered and indexable. TaIGa takes advantage of this particular behaviour to work properly, and you 
+can actually test the difference yourself by running a list of 30~ organisms or something with Python2.7 and Python3.x. Check 
+the TaIGa_result file, particularly for rows that all of your organisms share (like 'genus' if your input is a list of species 
+names). You'll see that the informations for certain rows are scrambled, because Python2.7 doesn't maintain the order for the 
+items inside the objects TaIGa uses. So, to sum up, if you run TaIGa with Python2.7 it will not work as intended and your result 
+file will be scrambled. Don't do it.
 
 TaIGa is free to use, free to distribute and free to modify. TaIGa is a rather simple script and didn't take me much time to 
 build it. It also depens heavily on pre-built modules to work properly. Being so, I won't ever complain if someone would take 

@@ -25,3 +25,8 @@ outfiles/taiga/chico/missing/TaIGa_result.csv
 outfiles/taiga/chico/missing/names.txt
 outfiles/taiga/chico/missing/missing_taxid/TaIGa_missing.txt
 outfiles/taiga/chico/missing/missing_taxid/TaIGa_result.csv
+input/aves_com_refseq
+outfiles/taiga/thieres/TaIGa_result.csv
+outfiles/taiga/thieres/TaIGa_result.ods
+outfiles/taiga/thieres/test/TaIGa_missing.txt
+outfiles/taiga/thieres/test/TaIGa_result.csv
