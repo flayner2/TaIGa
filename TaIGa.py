@@ -22,6 +22,8 @@ from collections import OrderedDict
 from Bio import Entrez, SeqIO
 from Bio.SeqRecord import SeqRecord
 
+if sys.version_info < (3, 6):
+    sys.exit("You are running TaIGa with a Python version older than 3.6x. Please, run TaIGa again as 'python3 TaIGa.py ...' or 'python3.6 TaIGa.py ...'.")
 
 def organize_tax_info(user_email, orgs_dict, retries):
     """ Creates a list of dictionaries for every organism from the input file, each dictionary containing all relevant output information for that organism. The 'taxonomy' key refers to a list o dictionaries, each containing 'rank': 'name' key:value pairs. Returns the full list. """

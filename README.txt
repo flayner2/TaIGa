@@ -14,7 +14,7 @@ it.
 
 ## Dependencies:
     
-    -Python 3.x, preferably 3.6
+    -Python 3.6x
     -Biopython version 1.73 or newer (and all of its dependencies, obviously)
     -Pandas version 0.24.2 or newer (and all of its dependencies, obviously)
     -An internet connection
@@ -132,14 +132,14 @@ according to the speed of your connection. Those variables aren't something I ca
 using TaIGa. And, last but not least, TaIGa will obviously take longer to run if you have a lot of organisms.
 
 Don't run TaIGa with Python2.7 or earlier versions. In fact, prefer running TaIGa with Python3.6x. The reason behind this is how 
-differently Python3 and Python2 handle iterable objects like sets and dictionaries. In Python2.x, those objects are not ordered, 
-meaning you cannot trust that the order by which you added elements to it will be maintained for further operations. In Python3, 
-however, those iterables are ordered and indexable. TaIGa takes advantage of this particular behaviour to work properly, and you 
-can actually test the difference yourself by running a list of 30~ organisms or something with Python2.7 and Python3.x. Check 
-the TaIGa_result file, particularly for rows that all of your organisms share (like 'genus' if your input is a list of species 
-names). You'll see that the informations for certain rows are scrambled, because Python2.7 doesn't maintain the order for the 
-items inside the objects TaIGa uses. So, to sum up, if you run TaIGa with Python2.7 it will not work as intended and your result 
-file will be scrambled. Don't do it.
+differently Python3.6 and Python2 handle iterable objects like sets and dictionaries. In Python2.x, those objects are not 
+ordered, meaning you cannot trust that the order by which you added elements to it will be maintained for further operations. In 
+Python3.6, however, those iterables are ordered and indexable. TaIGa takes advantage of this particular behaviour to work  
+properly, and you can actually test the difference yourself by running a list of 30~ organisms or something with Python2.7 and 
+Python3.6x. Check the TaIGa_result file, particularly for rows that all of your organisms share (like 'genus' if your input is a 
+list of species names). You'll see that the informations for certain rows are scrambled, because Python2.7 doesn't maintain the 
+order for the items inside the objects TaIGa uses. So, to sum up, if you run TaIGa with Python2.7 it will not work as intended 
+and your result file will be scrambled. Don't do it. TaIGa will know.
 
 TaIGa is free to use, free to distribute and free to modify. TaIGa is a rather simple script and didn't take me much time to 
 build it. It also depens heavily on pre-built modules to work properly. Being so, I won't ever complain if someone would take 
