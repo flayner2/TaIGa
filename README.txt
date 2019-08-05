@@ -22,10 +22,25 @@ it.
 ## How to run:
 
 To run taiga, on your command line, from the TaIGa folder, do as following:
-    $ python3 TaIGa.py [input file] [output path] [valid e-mail] --[one optional argument]
+    $ python3.6 TaIGa.py [input file] [output path] [valid e-mail] --[optional arguments]
+or:
+    $ path/to/python3.6 TaIGa.py [input file] [output path] [valid e-mail] --[optional arguments]
 
 If you want further information on how to run TaIGa and what are the required and optional arguments it expects, you may run:
-    $ python3 TaIGa.py -h
+    $ python3.6 TaIGa.py -h
+or:
+    $ path/to/python3.6 TaIGa.py -h
+
+## Example run:
+    $ python3.6 TaIGa.py example/example_input.txt example flayner5@gmail.com -c
+
+Explaining: this will run TaIGa on a list of valid taxon names, stored as line separated values on a file named
+'example_input.txt', defining the output folder to be 'example' and using my own e-mail. The TaIGa name correcting function is 
+disasbled with the option '-c', as this usually yields better results and avoid certain bad behaviours. After this run, if it is 
+successfull, there should be a 'TaIGa_result.csv' file inside the 'example' folder. The folder may also contain a 
+'TaIGa_missing.txt' file if there's any missing data (in this example run, there is). If the option '-v' was used, you should 
+also expect a 'TaIGa_run.log' file inside the main 'TaIGa.py' script folder. You can check the inputs and outputs of this 
+example run inside the distributed 'example' folder.
 
 ## Positional (required) Arguments:
 
@@ -65,9 +80,14 @@ first record it finds.
 --multi: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect a Genbank format genome file with 
 multiple records from multiple, different organisms. TaIGa does check for duplicate names and ignores them.
 
+--tid: This changes TaIGa's behaviour to, instead of expecting any sort of name-based input, to expect a text file with a list 
+of valid TaxIDs for a collection of organisms (or taxon levels). This is incompatible with the '-c' option, as TaIGa already 
+skips the spelling correction when run with TaxIDs. 
+
 ### Other Options:
 
--c: This disables TaIGa's name correcting functionality. The usefulness of this is discussed below.
+-c: This disables TaIGa's name correcting functionality. The usefulness of this is discussed below. This is incompatible with 
+'--tid'. See '--tid' above.
 
 -t: This sets the maximum number of retries TaIGa will do when fetching for taxonomic information for an organism. This can be 
 very useful as Entrez will many times return broken responses. Default: 5.

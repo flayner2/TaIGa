@@ -2,12 +2,13 @@
 """                                          TaIGa - TAxonomy Information GAtherer
 This is a simple script that interacts with various utilities from the NCBI's Entrez api in order to retrieve relevant taxonomic
 information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format genome files, as
-well as a text file format list of organism names, separated by lines. TaIGa recieves a file as input, an output folder path, a valid user e-mail and one optional argument to identify the type of input file. TaIGa then uses Entrez to retrieve the TaxID, 
-Genome ID and all taxonomic information of all taxa up to the organism name provided. Then, it builds a DataFrame and outputs it
-to a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass 
-taxonomical metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big collection 
-of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You should watch 
-it. 
+well as a text file format list of organism names or taxon IDs, separated by lines. TaIGa recieves a file as input, an output 
+folder path, a valid user e-mail and one optional argument to identify the type of input file. TaIGa then uses Entrez to 
+retrieve the TaxID, Genome ID and all taxonomic information of all taxa up to the organism name provided. Then, it builds a 
+DataFrame and outputs it to a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers 
+to gather mass taxonomical metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a 
+big collection of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You 
+should watch it. 
                         TaIGa was developed and is maintained by Maycon Douglas de Oliveira - 2019                          """
 ################################################################################################################################
 
@@ -78,6 +79,13 @@ def retrive_taxonomy(user_email, tax_id, retries):
     raise IndexError
 
 
+def get_name_from_id(user_email, tax_id):
+    Entrez.email = user_email
+    query = Entrez.efetch(db="taxonomy", id=tax_id, retmode="xml")
+    tax_info = Entrez.read(query)
+
+    return tax_info[0]["ScientificName"]
+
 #Taking the user input from the command line. The path to the input file and the path to the output folder. Both are taken from stdin. Aditional options let TaIGa understand the format of the input.
 taiga = argparse.ArgumentParser(
     description=
@@ -112,6 +120,7 @@ taiga.add_argument(
     help=
     "Use this option if you want to run TaIGa from a Genbank format genome file with multiple records from multiple different organisms. TaIGa does check for duplicate names and automatically removes them.",
     action="store_true")
+taiga.add_argument("--tid", help="Use this option if you want to run TaIGa from a text file with a list of valid Taxonomy TaxIDs.", action="store_true")
 taiga.add_argument(
     "-c",
     help=
@@ -121,7 +130,7 @@ taiga.add_argument(
     "-t",
     help=
     "Set the maximum ammount of retries for TaIGa's requests. By default, this number is 5.",
-    nargs=1)
+    nargs=1, default="5")
 taiga.add_argument(
     "-v",
     help=
@@ -132,12 +141,12 @@ taiga.add_argument(
 args = taiga.parse_args()
 # Define the path to the input file
 input_path = args.input
-# Define the path to the output file
+# Define the path to the output file, adding an ending forward slash if needed
 output_path = args.outdir + '/' if args.outdir[-1] != '/' else args.outdir
 # Define the user email for Entrez.email, as it is a good practice of E-utils
 user_email = args.email
 # Define maximum number of retries
-retries = int(args.t[0]) if args.t else 5
+retries = int(args.t[0])
 # A list to hold all organism names
 names = []
 # A dictionary to hold {'organism name': taxid} key:value pairs
@@ -148,6 +157,8 @@ genome_ids_collection = {}
 missing_corrected = []
 # A list to hold all organisms for which the TaxID wasn't found
 missing_taxid = []
+# A list to hold all organisms (from TaxID input) for which the name wasn't found
+missing_name = []
 # A list of dictionaries to hold the taxonomic information for each organism. The keys are the corrected organism names, and the values are lists of dictionaries, each containing the {taxonomic level: taxon} key:value pair
 tax_info = []
 
@@ -164,16 +175,37 @@ log.info("""*********************************************
 *********************************************""")
 
 # Checking if only one optional argument was passed to TaIGa
-if (args.multi and args.same) or (args.multi
-                                  and args.single) or (args.single
-                                                       and args.same):
+if (args.multi and (args.same or args.single or args.tid)) or (args.same and (args.multi or args.single or args.tid)) or (args.single and (args.same or args.multi or args.tid)) or (args.tid and (args.same or args.single or args.multi)):
     log.error(
-        "\nERROR: Please run TaIGa with only one of the possible input type optional arguments."
-    )
+        "\nERROR: Please run TaIGa with only one of the possible input type optional arguments.")
     sys.exit()
 
-# First checking if input file is a genome file with multiple records from multiple organisms
-if args.multi:
+# Checking if TaIGa is being run on TaxID mode with the '-c' argument.
+# This is needed because, when run with '--tid', TaIGa never actually calls 'correct_spell'.  
+# The retrieved name is assumed tobe correct.
+if args.tid and args.c:
+    log.error("\nERROR: Please, when running TaIGa with the '--tid' option, don't use '-c', as TaIGa already skips the name correction.") 
+    sys.exit()
+
+# First checking if input file is a text file with multiple TaxIDs
+if args.tid:
+    try:
+        log.info("\n>> Parsing input as a text file with multiple TaxIDs.\n")
+        with open(input_path, "r") as list_of_ids:
+            input_ids = list_of_ids.readlines()
+            for input_id in range(len(input_ids)):
+                input_ids[input_id] = input_ids[input_id].replace("\n", "") # List of all TaxIDs
+                log.info("{} ---> All OK".format(input_ids[input_id]))
+    except (KeyboardInterrupt):
+        log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+        sys.exit()
+    except:
+        log.error(
+            "\nERROR: Couldn't parse name list. Check your file an try running TaIGa again.\n"
+        )
+        sys.exit()
+# Then checking if input file is a genome file with multiple records from multiple organisms
+elif args.multi:
     name_counter = 0
     log.info(
         "\n>> Parsing input as a Genbank file with multiple records for multiple organisms.\n"
@@ -292,8 +324,54 @@ log.info(
 # Done collecting all organism names from the input file. Print a message indicating the next step.
 log.info("\n>> Searching for taxonomic information...\n")
 
+# Checking if the input is a list of TaxIDs instead of any type of name input
+if args.tid:
+    input_ids = list(dict.fromkeys(input_ids))
+    for each_id in input_ids:
+        # Searching for each organism name associated to each TaxID
+        try:
+            log.info("> Searching for corresponding organism name of '{}'".format(each_id))
+            try:
+                each_name = get_name_from_id(user_email, each_id) # Getting the corresponding name for each TaxID
+                log.info(" >>>> Name for '{}' : '{}'\n".format(
+                    each_id, each_name))
+            except (IndexError): # If the name isn't found, ignore this organism for now
+                log.warning(
+                        "\n\t>> Couldn't find an organism name for '{}'\n"
+                        .format(each_id))
+                missing_name.append(each_id) # But append it to the missing list for later printing
+                continue
+        except (KeyboardInterrupt):
+            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+            sys.exit()
+        # Searching for each GenomeID associated to each name
+        try:
+            g_id = search(user_email, "genome", each_name)
+        except (KeyboardInterrupt):
+            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+            sys.exit()
+        except (IndexError):
+            pass
+            g_id = '-'
+        # Adding the name, TaxID and GenomeID to each its own list
+        try:
+            taxon_ids_collection[each_name] = each_id
+            genome_ids_collection[each_name] = g_id
+        except (NameError):
+            pass
+            log.warning(
+                "\n\t>> Will ignore organism '{}' for now. Try to handle it manually later.\n"
+                .format(each_name))
+        except (KeyboardInterrupt):
+            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+            sys.exit()
+        except:
+            pass
+            log.warning(
+                "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
+                .format(each_name))
 # Checking if there are multiple records on the file (for different organisms)
-if type(names) == list:
+elif type(names) == list:
     names = list(
         dict.fromkeys(names)
     )  # Using Python's collections module to uniquefy all names in list
@@ -451,14 +529,15 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
             .format(names))
 
 try:
-    if not args.c:
+    if (not args.c) and (not args.tid):
         # Check for the organisms with missing corrected name or taxid and remove their name form the names list
         for missed in missing_corrected:
             if missed in names:
                 names.remove(missed)
-    for missed in missing_taxid:
-        if missed in names:
-            names.remove(missed)
+    if not args.tid:    
+        for missed in missing_taxid:
+            if missed in names:
+                names.remove(missed)
 
     # Done getting all preliminary information, print a message informing the next step
     log.info(
@@ -539,7 +618,10 @@ try:
             tmp_orgn)  # Append that organism dictionary to the final list
 
     # Create a DataFrame with the results. The values come from final_info, the names of the organisms are the indexes for the rows and the taxonomic ranks in ranks are the labels for the columns
-    if type(names) == list:  # Checking if names is a list
+    if args.tid:
+        names_list = [i for i in taxon_ids_collection.keys()]
+        frame = pd.DataFrame(final_info, index=names_list, columns=ranks)
+    elif type(names) == list:  # Checking if names is a list
         frame = pd.DataFrame(final_info, index=names, columns=ranks)
     else:  # If it's not, make it a list so Pandas can use it as indexes for the rows of the DataFrame
         names_list = []
@@ -569,7 +651,7 @@ try:
     frame.to_csv(output_path + 'TaIGa_result.csv')
 
     # Checking if there are missing correct names or TaxIDs. If there are, generating log files for those.
-    if missing_corrected or missing_taxid:
+    if missing_corrected or missing_taxid or missing_name:
         log.info(
             "\n>> Creating a file for the organisms with missing information. You'll find it inside the provided output folder, named 'TaIGa_missing.txt'"
         )
@@ -582,6 +664,10 @@ try:
             if (missing_taxid):
                 for taxid in missing_taxid:
                     missing_file.write("\t\t\t{}\n".format(taxid))
+            missing_file.write("TaxIDs with missing names: \n")
+            if (missing_name):
+                for tax_id in missing_name:
+                    missing_file.write("\t\t\t{}\n".format(tax_id))
 except (KeyboardInterrupt):
     log.warning("\nQUIT: TaIGa was stopped by the user.\n")
     sys.exit()
