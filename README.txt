@@ -173,9 +173,6 @@ and accomplished when I finally had a stable version of TaIGa at hand, and I fee
 ask that, if you want to use TaIGa for your work or want to build something on top of it, please, cite the original script and 
 my name as its creator.
 
-TaIGa's repository has an 'examples' folder on it. On that folder, you'll find an input file named 'names.txt' and both an 
-output file and a missing information file. Those were run with the '--name' option on.
-
 As said in the introduction, another inspiration for TaIGa's name is the cute romance anime character Taiga, from the japanese 
 animation ToraDora. I highly recommend it.
 
