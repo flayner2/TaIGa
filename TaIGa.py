@@ -124,7 +124,7 @@ taiga.add_argument("--tid", help="Use this option if you want to run TaIGa from 
 taiga.add_argument(
     "-c",
     help=
-    "Use this to disable TaIGa's name correcting function. Sometimes, this function will alter organism names unecessarily and thus result in missing information returned (which could be misleading).",
+    "Use this to enable TaIGa's name correcting function. Beware: sometimes, this function will alter organism names unecessarily and thus result in missing information returned (which could be misleading).",
     action="store_true")
 taiga.add_argument(
     "-t",
@@ -183,8 +183,8 @@ if (args.multi and (args.same or args.single or args.tid)) or (args.same and (ar
 # Checking if TaIGa is being run on TaxID mode with the '-c' argument.
 # This is needed because, when run with '--tid', TaIGa never actually calls 'correct_spell'.  
 # The retrieved name is assumed tobe correct.
-if args.tid and args.c:
-    log.error("\nERROR: Please, when running TaIGa with the '--tid' option, don't use '-c', as TaIGa already skips the name correction.") 
+if args.tid and args.c: 
+    log.error("\nERROR: Please, when running TaIGa with the '--tid' option, don't use '-c', as TaIGa skips the name correction.") 
     sys.exit()
 
 # First checking if input file is a text file with multiple TaxIDs
@@ -330,20 +330,31 @@ if args.tid:
     for each_id in input_ids:
         # Searching for each organism name associated to each TaxID
         try:
-            log.info("> Searching for corresponding organism name of '{}'".format(each_id))
-            try:
-                each_name = get_name_from_id(user_email, each_id) # Getting the corresponding name for each TaxID
-                log.info(" >>>> Name for '{}' : '{}'\n".format(
-                    each_id, each_name))
-            except (IndexError): # If the name isn't found, ignore this organism for now
-                log.warning(
-                        "\n\t>> Couldn't find an organism name for '{}'\n"
-                        .format(each_id))
-                missing_name.append(each_id) # But append it to the missing list for later printing
-                continue
+            log.info("> Searching for corresponding organism name and genome ID of '{}'".format(each_id))
+            for i in range(retries):
+                try:
+                    each_name = get_name_from_id(user_email, each_id) # Getting the corresponding name for each TaxID
+                    log.info(" >>>> Name for '{}' : '{}'\n".format(
+                        each_id, each_name))
+                    break
+                except (KeyboardInterrupt):
+                    log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+                    sys.exit()
+                except (IndexError): # If the name isn't found, ignore this organism for now
+                    log.warning(
+                            "\n\t>> Couldn't find an organism name for '{}'\n"
+                            .format(each_id))
+                    missing_name.append(each_id) # But append it to the missing list for later printing
+                    continue
+                except:
+                    log.warning(" * Error, trying again * ")
+                    sleep(randint(3, 8))
+                    continue
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
+        except:
+            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n".format(each_id))
         # Searching for each GenomeID associated to each name
         try:
             g_id = search(user_email, "genome", each_name)
@@ -351,14 +362,17 @@ if args.tid:
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except (IndexError):
-            pass
             g_id = '-'
+        except (NameError):
+            log.warning("\nERROR: No genome ID found for organism '{}'. TaIGa probably didn't find the organism name for this TaxID.\n".format(each_id))
+            continue
+        except:
+            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n".format(each_id))
         # Adding the name, TaxID and GenomeID to each its own list
         try:
             taxon_ids_collection[each_name] = each_id
             genome_ids_collection[each_name] = g_id
         except (NameError):
-            pass
             log.warning(
                 "\n\t>> Will ignore organism '{}' for now. Try to handle it manually later.\n"
                 .format(each_name))
@@ -366,7 +380,6 @@ if args.tid:
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except:
-            pass
             log.warning(
                 "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
                 .format(each_name))
@@ -377,7 +390,7 @@ elif type(names) == list:
     )  # Using Python's collections module to uniquefy all names in list
     for name in names:
         # Use Entrez.espell to correct the spelling of organism names
-        if not args.c:
+        if args.c:
             try:
                 log.info("> Correcting organism name of '{}'".format(name))
                 correct_name = correct_spell(user_email, name)
@@ -387,7 +400,6 @@ elif type(names) == list:
                         .format(name))
                     missing_corrected.append(name)
             except (RuntimeError):
-                pass
                 log.warning(
                     "\n\t>> Couldn't find the correct organism name for '{}'\n"
                     .format(name))
@@ -396,35 +408,40 @@ elif type(names) == list:
                 log.warning("\nQUIT: TaIGa was stopped by the user.\n")
                 sys.exit()
             except:
-                pass
                 log.info(
                     "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'.\n"
                     .format(name))
                 missing_corrected.append(name)
+        else: # If name correction is disabled, just use the input organism name itself
+            correct_name = name
         # Search Taxonomy for the TaxID of the input organism names and Genome for the GenomeID
-        try:
-            if args.c:
-                correct_name = name
-            log.info("> Searching TaxID of organism '{}'".format(name))
-            t_id = search(user_email, "taxonomy", correct_name)
+        log.info("> Searching TaxID and genome ID of organism '{}'".format(name))
+        for i in range(retries):
             try:
-                g_id = search(user_email, "genome", correct_name)
+                t_id = search(user_email, "taxonomy", correct_name)
+                log.info(" >>>> TaxID for '{}' : '{}'".format(correct_name, t_id))
+                try:
+                    g_id = search(user_email, "genome", correct_name)
+                    log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))
+                except (IndexError):
+                    g_id = '-'
+                    log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name, t_id))
+                break
+            except (KeyboardInterrupt):
+                log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+                sys.exit()
             except (IndexError):
-                pass
-                g_id = '-'
-            log.info(" >>>> TaxID for '{}' : '{}'\n".format(
-                correct_name, t_id))
-        except (IndexError):
-            pass
-            log.warning(
-                "\n\t>> Couldn't find a valid TaxID for the organism '{}'.\n".
-                format(name))
-            missing_taxid.append(name)
-        except (KeyboardInterrupt):
-            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
-            sys.exit()
-        except:
-            pass
+                log.warning(
+                    "\n\t>> Couldn't find a valid TaxID for the organism '{}'.\n".
+                    format(name))
+                missing_taxid.append(name)
+                break
+            except:
+                log.warning(" * Error, trying again * ")
+                t_id = 'null'
+                sleep(randint(3, 8))
+                continue
+        if t_id == 'null':
             if len(correct_name) == 0:
                 log.warning(
                     "\n\t>> Organism '{}' lacks a corrected name. Unable to search for TaxID.\n"
@@ -440,7 +457,6 @@ elif type(names) == list:
                 taxon_ids_collection[name] = t_id
                 genome_ids_collection[name] = g_id
         except (NameError):
-            pass
             log.warning(
                 "\n\t>> Will ignore organism '{}' for now. Try to handle it manually later.\n"
                 .format(name))
@@ -448,13 +464,12 @@ elif type(names) == list:
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except:
-            pass
             log.warning(
                 "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
                 .format(name))
 else:  # If there's only one record, or only one organism, a loop isn't needed
     # Use Entrez.espell to correct the spelling of organism names
-    if not args.c:
+    if args.c:
         try:
             log.info("> Correcting organism name of '{}'".format(names))
             correct_name = correct_spell(user_email, names)
@@ -464,7 +479,6 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
                     .format(names))
                 missing_corrected.append(names)
         except (RuntimeError):
-            pass
             log.warning(
                 "\n\t>> Couldn't find the correct organism name for '{}'\n".
                 format(names))
@@ -473,33 +487,39 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except:
-            pass
             log.warning(
                 "\n\t>> Unknown error occurred while trying to correct the spelling for organism '{}'\n"
                 .format(names))
             missing_corrected.append(names)
+    else: # If name correction is disabled, just use the input organism name itself
+        correct_name = names
     # Search Taxonomy for the TaxID of the input organism names and Genome for the GenomeID
-    try:
-        if args.c:
-            correct_name = names
-        log.info("> Searching TaxID of organism '{}'".format(names))
-        t_id = search(user_email, "taxonomy", correct_name)
+    log.info("> Searching TaxID and genome ID of organism '{}'".format(names))
+    for i in range(retries):
         try:
-            g_id = search(user_email, "genome", correct_name)
+            t_id = search(user_email, "taxonomy", correct_name)
+            log.info(" >>>> TaxID for '{}' : '{}'".format(correct_name, t_id))
+            try:
+                g_id = search(user_email, "genome", correct_name)
+                log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))            
+            except (IndexError):
+                g_id = '-'
+                log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name, t_id))
+            break
+        except (KeyboardInterrupt):
+            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+            sys.exit()
         except (IndexError):
-            g_id = '-'
-        log.info(" >>>> TaxID for '{}' : '{}'\n".format(correct_name, t_id))
-    except (IndexError):
-        pass
-        log.warning(
-            "\n\t>> Couldn't find a valid TaxID for the organism {}\n".format(
-                names))
-        missing_taxid.append(names)
-    except (KeyboardInterrupt):
-        log.warning("\nQUIT: TaIGa was stopped by the user.\n")
-        sys.exit()
-    except:
-        pass
+            log.warning(
+                "\n\t>> Couldn't find a valid TaxID for the organism {}\n".format(
+                    names))
+            missing_taxid.append(names)
+        except:
+            log.warning(" * Error, trying again * ")
+            t_id = 'null'
+            sleep(randint(3, 8))
+            continue
+    if t_id == 'null':
         if len(correct_name) == 0:
             log.warning(
                 "\n\t>> Organism '{}' lacks a corrected name. Unable to search for TaxID.\n"
@@ -515,7 +535,6 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
             taxon_ids_collection[names] = t_id
             genome_ids_collection[names] = g_id
     except (NameError):
-        pass
         log.warning(
             "\n\t>> Will ignore organism '{}' for now. Try to handle it manually later.\n"
             .format(names))
@@ -523,13 +542,12 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
         log.error("\nQUIT: TaIGa was stopped by the user.\n")
         sys.exit()
     except:
-        pass
         log.warning(
             "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
             .format(names))
 
 try:
-    if (not args.c) and (not args.tid):
+    if (args.c) and (not args.tid):
         # Check for the organisms with missing corrected name or taxid and remove their name form the names list
         for missed in missing_corrected:
             if missed in names:

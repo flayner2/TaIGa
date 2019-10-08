@@ -32,11 +32,10 @@ or:
     $ path/to/python3.6 TaIGa.py -h
 
 ## Example run:
-    $ python3.6 TaIGa.py example/example_input.txt example flayner5@gmail.com -c
+    $ python3.6 TaIGa.py example/example_input.txt example flayner5@gmail.com
 
 Explaining: this will run TaIGa on a list of valid taxon names, stored as line separated values on a file named
-'example_input.txt', defining the output folder to be 'example' and using my own e-mail. The TaIGa name correcting function is 
-disasbled with the option '-c', as this usually yields better results and avoid certain bad behaviours. After this run, if it is 
+'example_input.txt', defining the output folder to be 'example' and using my own e-mail. After this run, if it is 
 successfull, there should be a 'TaIGa_result.csv' file inside the 'example' folder. The folder may also contain a 
 'TaIGa_missing.txt' file if there's any missing data (in this example run, there is). If the option '-v' was used, you should 
 also expect a 'TaIGa_run.log' file inside the main 'TaIGa.py' script folder. You can check the inputs and outputs of this 
@@ -81,12 +80,12 @@ first record it finds.
 multiple records from multiple, different organisms. TaIGa does check for duplicate names and ignores them.
 
 --tid: This changes TaIGa's behaviour to, instead of expecting any sort of name-based input, to expect a text file with a list 
-of valid TaxIDs for a collection of organisms (or taxon levels). This is incompatible with the '-c' option, as TaIGa already 
+of valid TaxIDs for a collection of organisms (or taxon levels). This is incompatible with the '-c' option, as TaIGa 
 skips the spelling correction when run with TaxIDs. 
 
 ### Other Options:
 
--c: This disables TaIGa's name correcting functionality. The usefulness of this is discussed below. This is incompatible with 
+-c: This enables TaIGa's name correcting functionality. The usefulness of this is discussed below. This is incompatible with 
 '--tid'. See '--tid' above.
 
 -t: This sets the maximum number of retries TaIGa will do when fetching for taxonomic information for an organism. This can be 
@@ -116,12 +115,12 @@ misspelling on some organism names before submiting them to TaIGa's search funct
 very sensitive to anything it thinks is a misspelling. On top of that, Biopython's parsing functions can, sometimes, mess with 
 the original organism names (way before the 'correct spelling' function is called). This usually happens with organism names 
 containing special characters or things such as dates or researchers' names. This isn't something TaIGa handles very well as of 
-now, so expect some perfectly normal organism names to, sometimes, appear on the 'missing' file.
+now, so expect some perfectly normal organism names to, sometimes, appear on the 'missing' file if you choose to use the '-c' option.
 
 ## Handling Missing TaxID/Corrected Names:
 
-TaIGa has a certain command line optional argument (flag), the '-c' option. This will disable TaIGa's name correcting function,
-so TaIGa will search for an organism's TaxID without trying to correct its name. Why is this useful?
+TaIGa has a certain command line optional argument (flag), the '-c' option. This will enable TaIGa's name correcting function,
+so TaIGa will search for an organism's TaxID without trying to correct its name. Why isn't this enabled by default?
 
 First of all, when you run TaIGa for a large list of organisms, there's a good chance you'll get a 'TaIGa_missing' file, probably
 with a decent number of organisms missing information. Why is it so? Well, most of it has to do with Entrez and Taxonomy 
@@ -137,7 +136,7 @@ Some organisms, though, will persist with having missing data. Most of the time,
 reason behind this has to do with Entrez's Correct Spelling functionality. Sometimes, when TaIGa runs its name correcting 
 function, Entrez will change that name to a non-valid organism name, thus returning a valid corrected name, but no TaxID related 
 to it. To work around this, gather all the names on your 'TaIGa_missing' file (after doing what was discussed in the previous 
-paragraph) and run TaIGa again with the '-c' argument at the end. This will make TaIGa skip its spell-correcting function, thus 
+paragraph) and run TaIGa again without the '-c' argument at the end. This will make TaIGa skip its spell-correcting function, thus 
 solving this particular issue with Correct Spelling. In the end, your final 'TaIGa_missing' file shouldn't have many organisms 
 anymore.
 
