@@ -21,6 +21,11 @@ it.
 
 ## How to run:
 
+All of the following examples (as well as the "Example run" section) take in account that you have multiple Python versions
+installed on your machine and that one of them is python3.6. It might be the case that your machine only has python3.6 or 
+greater (eg. python3.7) installed or that the command "python" is an alias for any python version >= 3.6. In those cases, 
+running TaIGa with only "python" instead of "python3.6" is totally fine.
+
 To run taiga, on your command line, from the TaIGa folder, do as following:
     $ python3.6 TaIGa.py [input file] [output path] [valid e-mail] --[optional arguments]
 or:
@@ -43,11 +48,11 @@ example run inside the distributed 'example' folder.
 
 ## Positional (required) Arguments:
 
-[input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a list of 
-organism names separated by line in a text-like file. You can change this behaviour so TaIGa would expect: a Genbank format 
-genome file with multiple records, all from the same organism; a Genbank format genome file with only one record; or a Genbank 
-format genome file with multiple records from multiple organisms. Organism names refer to any valid taxonomic level that is 
-available on NCBI's Taxonomy database.
+[input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a 
+list of organism names separated by line in a text-like file. You can change this behaviour so TaIGa would expect: a line 
+separated text file with a collection of taxon IDs; a Genbank format genome file with multiple records, all from the same 
+organism; a Genbank format genome file with only one record; or a Genbank format genome file with multiple records from 
+multiple organisms. Organism names refer to any valid taxonomic level that is available on NCBI's Taxonomy database.
 
 [output path]: This is the full path to the output folder. This is where TaIGa will automatically create the output file, 
 discussed below, and the missing file (also discussed below) if there is need for one. This folder must be a valid path on your 
@@ -166,9 +171,6 @@ TaIGa and build, on top of it, a more sofisticated or efficient version of it an
 and accomplished when I finally had a stable version of TaIGa at hand, and I feel very proud of it. Because of that, I kindly 
 ask that, if you want to use TaIGa for your work or want to build something on top of it, please, cite the original script and 
 my name as its creator.
-
-TaIGa's repository has an 'examples' folder on it. On that folder, you'll find an input file named 'names.txt' and both an 
-output file and a missing information file. Those were run with the '--name' option on.
 
 As said in the introduction, another inspiration for TaIGa's name is the cute romance anime character Taiga, from the japanese 
 animation ToraDora. I highly recommend it.
