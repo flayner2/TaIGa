@@ -1,4 +1,4 @@
-# TaIGa - TAxonomy Information GAtherer
+# TaIGa - *Ta*xonomy *I*nformation *Ga*therer
 
 This is a simple script that interacts with various utilities from NCBI's Entrez api in order to retrieve relevant taxonomic 
 information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format genome files, as 
@@ -27,13 +27,19 @@ greater (eg. python3.7) installed or that the command "python" is an alias for a
 running TaIGa with only "python" instead of "python3.6" is totally fine.
 
 To run taiga, on your command line, from the TaIGa folder, do as following:
+    
     $ python3.6 TaIGa.py [input file] [output path] [valid e-mail] --[optional arguments]
+
 or:
+    
     $ path/to/python3.6 TaIGa.py [input file] [output path] [valid e-mail] --[optional arguments]
 
 If you want further information on how to run TaIGa and what are the required and optional arguments it expects, you may run:
+    
     $ python3.6 TaIGa.py -h
+    
 or:
+    
     $ path/to/python3.6 TaIGa.py -h
 
 ## Example run:
