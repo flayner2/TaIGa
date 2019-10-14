@@ -425,7 +425,7 @@ elif type(names) == list:
                     log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))
                 except (IndexError):
                     g_id = '-'
-                    log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name, t_id))
+                    log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name))
                 break
             except (KeyboardInterrupt):
                 log.warning("\nQUIT: TaIGa was stopped by the user.\n")
@@ -504,7 +504,7 @@ else:  # If there's only one record, or only one organism, a loop isn't needed
                 log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))            
             except (IndexError):
                 g_id = '-'
-                log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name, t_id))
+                log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name))
             break
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
