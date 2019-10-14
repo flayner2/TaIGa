@@ -10,7 +10,7 @@ taxonomical metadata for their projects. Therefore, TaIGa is best used when you 
 of genomes in a file. TaIGa is also a very cute anime character from the japanese romance animation ToraDora. You should watch 
 it. 
 
-# TaIGa was developed and is maintained by Maycon Douglas de Oliveira - 2019
+**TaIGa was developed and is maintained by Maycon Douglas de Oliveira - 2019**
 
 ## Dependencies:
     
