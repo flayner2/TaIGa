@@ -65,9 +65,9 @@ discussed below, and the missing file (also discussed below) if there is need fo
 system, but it doesn't need to be pre-created. TaIGa will check if the folder exists and, if it doesn't, it creates it at the 
 provided path.
 
-**[valid e-mail]**: This is just a valid e-mail of yours. Nothing will be sent to this e-mail, an neither TaIGa itself neither me 
-will ever have use it for anything other than running TaIGa (in fact, I will never have access to this information. You may 
-check the code yourself to confirm this). TaIGa only requires this field because it is usual to pass on this information when 
+**[valid e-mail]**: This is just a valid e-mail of yours. Nothing will be sent to this e-mail, and neither TaIGa itself neither me 
+will ever use it for anything other than running TaIGa (in fact, I will never have access to this information. You may 
+check the code yourself to confirm this). TaIGa only requires this field because it is standard procedure to pass on this information when 
 sending requests to Entrez. This is all TaIGa will use the e-mail for. You may pass on gibberish, if you so want, but I advise 
 you not to. TaIGa will run fine anyways, as long as you provide something to this argument field.
 
