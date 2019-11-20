@@ -75,11 +75,11 @@ you not to. TaIGa will run fine anyways, as long as you provide something to thi
 
 ### Input Modes (use only one per TaIGa run):
 
---single: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect only one record on the said file. 
+--single: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect only one record from a Genbank format genome file. 
 This is, TaIGa, when run with this option on, will only accept your input file if it has only and no more than one record. Check 
 your file closely before using this option. TaIGa will know.
 
---same: This changes TaIGa's behaviour to, instead of expecting a list of names to expect multiple records but all from the same 
+--same: This changes TaIGa's behaviour to, instead of expecting a list of names, expect multiple records but all from the same 
 organism. Do take care though: if your file has multiple records from different organisms and it also happens to have more than 
 one record for the same organism, this mode won't work as expected. This will only take the first organism on the genome file 
 and ignore all other records. If your file falls into this situation, run TaIGa in default mode. Eg.: this mode is useful if 
