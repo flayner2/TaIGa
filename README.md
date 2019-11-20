@@ -54,18 +54,18 @@ example run inside the distributed 'example' folder.
 
 ## Positional (required) Arguments:
 
-[input file]: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a 
+**[input file]**: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a 
 list of organism names separated by line in a text-like file. You can change this behaviour so TaIGa would expect: a line 
 separated text file with a collection of taxon IDs; a Genbank format genome file with multiple records, all from the same 
 organism; a Genbank format genome file with only one record; or a Genbank format genome file with multiple records from 
 multiple organisms. Organism names refer to any valid taxonomic level that is available on NCBI's Taxonomy database.
 
-[output path]: This is the full path to the output folder. This is where TaIGa will automatically create the output file, 
+**[output path]**: This is the full path to the output folder. This is where TaIGa will automatically create the output file, 
 discussed below, and the missing file (also discussed below) if there is need for one. This folder must be a valid path on your 
 system, but it doesn't need to be pre-created. TaIGa will check if the folder exists and, if it doesn't, it creates it at the 
 provided path.
 
-[valid e-mail]: This is just a valid e-mail of yours. Nothing will be sent to this e-mail, an neither TaIGa itself neither me 
+**[valid e-mail]**: This is just a valid e-mail of yours. Nothing will be sent to this e-mail, an neither TaIGa itself neither me 
 will ever have use it for anything other than running TaIGa (in fact, I will never have access to this information. You may 
 check the code yourself to confirm this). TaIGa only requires this field because it is usual to pass on this information when 
 sending requests to Entrez. This is all TaIGa will use the e-mail for. You may pass on gibberish, if you so want, but I advise 
@@ -75,11 +75,11 @@ you not to. TaIGa will run fine anyways, as long as you provide something to thi
 
 ### Input Modes (use only one per TaIGa run):
 
---single: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect only one record from a Genbank format genome file. 
+**--single**: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect only one record from a Genbank format genome file. 
 This is, TaIGa, when run with this option on, will only accept your input file if it has only and no more than one record. Check 
 your file closely before using this option. TaIGa will know.
 
---same: This changes TaIGa's behaviour to, instead of expecting a list of names, expect multiple records but all from the same 
+**--same**: This changes TaIGa's behaviour to, instead of expecting a list of names, expect multiple records but all from the same 
 organism. Do take care though: if your file has multiple records from different organisms and it also happens to have more than 
 one record for the same organism, this mode won't work as expected. This will only take the first organism on the genome file 
 and ignore all other records. If your file falls into this situation, run TaIGa in default mode. Eg.: this mode is useful if 
@@ -87,22 +87,22 @@ your genome file contains three 'Apis mellifera' records (each one with the DNA 
 though, if your genome file contains three 'Apis mellifera' records and two 'Homo sapiens' records. It will only consider the 
 first record it finds.
 
---multi: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect a Genbank format genome file with 
+**--multi**: This changes TaIGa's behaviour to, instead of expecting a list of names, to expect a Genbank format genome file with 
 multiple records from multiple, different organisms. TaIGa does check for duplicate names and ignores them.
 
---tid: This changes TaIGa's behaviour to, instead of expecting any sort of name-based input, to expect a text file with a list 
+**--tid**: This changes TaIGa's behaviour to, instead of expecting any sort of name-based input, to expect a text file with a list 
 of valid TaxIDs for a collection of organisms (or taxon levels). This is incompatible with the '-c' option, as TaIGa 
 skips the spelling correction when run with TaxIDs. 
 
 ### Other Options:
 
--c: This enables TaIGa's name correcting functionality. The usefulness of this is discussed below. This is incompatible with 
+**-c**: This enables TaIGa's name correcting functionality. The usefulness of this is discussed below. This is incompatible with 
 '--tid'. See '--tid' above.
 
--t: This sets the maximum number of retries TaIGa will do when fetching for taxonomic information for an organism. This can be 
+**-t**: This sets the maximum number of retries TaIGa will do when fetching for taxonomic information for an organism. This can be 
 very useful as Entrez will many times return broken responses. Default: 5.
 
--v: This disables TaIGa's standard verbose mode. If you use this option, TaIGa will print to the screen no more. Instead, it 
+**-v**: This disables TaIGa's standard verbose mode. If you use this option, TaIGa will print to the screen no more. Instead, it 
 will automatically generate a log file called 'TaIGa_run.log' inside the folder TaIGa is in. This log file will contain all 
 information about that particular TaIGa run.
 
