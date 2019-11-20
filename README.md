@@ -131,7 +131,7 @@ now, so expect some perfectly normal organism names to, sometimes, appear on the
 ## Handling Missing TaxID/Corrected Names:
 
 TaIGa has a certain command line optional argument (flag), the '-c' option. This will enable TaIGa's name correcting function,
-so TaIGa will search for an organism's TaxID without trying to correct its name. Why isn't this enabled by default?
+so TaIGa will search for an organism's TaxID after trying to correct its name. Why isn't this enabled by default?
 
 First of all, when you run TaIGa for a large list of organisms, there's a good chance you'll get a 'TaIGa_missing' file, probably
 with a decent number of organisms missing information. Why is it so? Well, most of it has to do with Entrez and Taxonomy 
@@ -148,8 +148,8 @@ reason behind this has to do with Entrez's Correct Spelling functionality. Somet
 function, Entrez will change that name to a non-valid organism name, thus returning a valid corrected name, but no TaxID related 
 to it. To work around this, gather all the names on your 'TaIGa_missing' file (after doing what was discussed in the previous 
 paragraph) and run TaIGa again without the '-c' argument at the end. This will make TaIGa skip its spell-correcting function, thus 
-solving this particular issue with Correct Spelling. In the end, your final 'TaIGa_missing' file shouldn't have many organisms 
-anymore.
+solving this particular issue with Correct Spelling. In the end, your final 'TaIGa_missing' file shouldn't have many 
+organisms anymore.
 
 ## Extra Info:
 
