@@ -177,7 +177,7 @@ def retrieve_from_multiple_names(input_names, user_email, c, retries):
                 "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
                 .format(correct_name))
 
-    return (missing_corrected, missing_taxid, taxon_ids_collection, genome_ids_collection)
+    return missing_corrected, missing_taxid, taxon_ids_collection, genome_ids_collection
 
 
 def retrieve_from_single_name(input_names, user_email, c, retries):
@@ -271,3 +271,15 @@ def retrieve_from_single_name(input_names, user_email, c, retries):
             .format(correct_name))
 
     return (missing_corrected, missing_taxid, taxon_ids_collection, genome_ids_collection)
+
+
+def get_tax_info(user_email, taxon_ids_collection, retries):
+    log.info(">> Gathering taxonomic information from NCBI Taxonomy. \
+        This might take a while.\n")
+
+    # Creating the list of dictionaries to store the taxonomic information for the organisms.
+    tax_info = fetchers.organize_tax_info(user_email, taxon_ids_collection, retries)
+
+    log.info(">> Done gathering taxonomic information\n")
+
+    return tax_info
