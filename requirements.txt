@@ -1,3 +1,3 @@
 # Required packages to run TaIGa
-pandas
-biopython
+pandas>=0.25.3
+biopython>=1.76
