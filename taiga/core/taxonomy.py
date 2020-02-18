@@ -63,26 +63,23 @@ def run_taiga():
 
     args = taiga.parse_args()
 
-    # Define the path to the input file
     input_path = args.infile
-    # Define the path to the output file, adding an ending forward slash if needed
+    # Add an ending forward slash to output path if needed
     output_path = args.outdir + '/' if args.outdir[-1] != '/' else args.outdir
-    # Define the user email for Entrez.email, as it is a good practice of E-utils
+    # Providing the email when doing requests through E-Utils is recommended
     user_email = args.email
-    # Define maximum number of retries. TODO: maybe use the biopython native approach instead.
-    retries = args.t[0]
-    # True or false for verbose
+    # TODO: maybe use the biopython native approach instead.
+    retries = args.t[-1]
     verbose = args.v
-    # True or false for correction
     correction = args.c
-    # True or false for taxon id list input
     tid = args.tid
-    # Input mode for genbank format files
-    mode = args.mode[0]
+    mode = args.mode
 
-    # A list to hold all organism names
+    # A list to hold Taxon objects
     taxon_list = []
 
+    # Inital configuration for the logging module.
+    # At this point, the output may be set to verbose or not.
     helpers.config_log(verbose)
 
     log.info("""
@@ -93,8 +90,8 @@ def run_taiga():
     *********************************************""")
 
     # Checking if TaIGa is being run on TaxID mode with the '-c' argument.
-    # This is needed because, when run with '--tid', TaIGa never actually calls 'correct_spell'.
-    # The retrieved name is assumed to be correct.
+    # This is needed because, when run with '--tid', TaIGa never actually calls 'correct_spell' as
+    # the retrieved name is assumed to be correct.
     if tid and correction:
         log.error("\nERROR: Please, when running TaIGa with the '--tid' option, don't use '-c', as\
                   TaIGa skips the name correction.")
@@ -105,19 +102,14 @@ def run_taiga():
         taxon_list = parsers.parse_gb(input_path, mode)
     else:
         taxon_list = parsers.parse_txt(input_path, tid)
-
+    
     log.info("\n>> Ignore if any duplicate name was printed, duplicates are removed.")
 
     log.info("\n>> Searching for taxonomic information...\n")
 
     # Checking if the input is a list of TaxIDs instead of any type of name input
     if tid:
-        taxon_ids_collection, \
-            genome_ids_collection, \
-            missing_name = retrievers.retrieve_from_taxid(
-                input_taxid,
-                user_email,
-                retries)
+        retrievers.retrieve_from_taxid(taxon_list, user_email, retries)
     # Checking if there are multiple records on the file (for different organisms)
     elif type(taxon_list) == list:
         missing_corrected, \

@@ -1,9 +1,9 @@
 class Taxon:
-    def __init__(self, name='', g_id='N/A', t_id='N/A', classification={},
+    def __init__(self, name='', genome_id='N/A', taxon_id='N/A', classification={},
                  missing_name=False, missing_taxid=False, missing_corrected=False):
         self.name = name
-        self.g_id = g_id
-        self.t_id = t_id
+        self.genome_id = genome_id
+        self.taxon_id = taxon_id
         self.classification = classification
         self.missing_name = missing_name
         self.missing_taxid = missing_taxid

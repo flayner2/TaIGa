@@ -28,7 +28,7 @@ def parse_txt(input_path, tid):
             # Checks first if input file is an ids or names file
             if tid:
                 for each_id in all_inputs:
-                    list_of_taxa.append(Taxon(t_id=each_id))
+                    list_of_taxa.append(Taxon(taxon_id=each_id))
 
                     log.info("{} ---> All OK".format(each_id))
             else:

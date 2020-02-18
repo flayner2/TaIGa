@@ -3,7 +3,8 @@ from time import sleep
 from random import randint
 import logging as log
 
-
+# TODO: see if all these functions need/can be refactored.
+# TODO: docstring them properly
 def organize_tax_info(user_email, orgs_dict, retries):
     """ Creates a list of dictionaries for every organism from the input file,
     each dictionary containing all relevant output information for that
@@ -32,11 +33,12 @@ def correct_spell(user_email, names):
     return corrected_names["CorrectedQuery"]
 
 
-def search(user_email, db, names):
+# TODO: check if genome_id fetching is working
+def search(user_email, db, name):
     """ Uses Entrez.esearch to either search for oranisms TaxIDs or Genome IDs.
     Returns either one of those based on the 'db' argument. """
     Entrez.email = user_email
-    query = Entrez.esearch(db=db, term=names, retmode="xml")
+    query = Entrez.esearch(db=db, term=name, retmode="xml")
     parsed = Entrez.read(query)
     if db == "taxonomy":
         return parsed["IdList"][0]

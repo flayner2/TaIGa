@@ -4,27 +4,22 @@ from time import sleep
 from random import randint
 from taiga.common import fetchers
 
-
-def retrieve_from_taxid(input_taxid, user_email, retries):
-    missing_name = []
-    taxon_ids_collection = {}
-    genome_ids_collection = {}
-
+# TODO: refactor all these functions. They can probably be smaller and more efficient.
+# TODO: also docstring them all and remove possibly redundant ones.
+def retrieve_from_taxid(taxon_list, user_email, retries):
     i = 0
 
-    input_taxid = list(dict.fromkeys(input_taxid))
-
-    for each_id in input_taxid:
+    for each_taxon in taxon_list:
         # Searching for each organism name associated to each TaxID
         try:
-            log.info("> Searching for corresponding organism name and genome \
-                     ID of '{}'".format(each_id))
+            log.info("> Searching for corresponding organism name and genome\
+                     ID of '{}'".format(each_taxon.taxon_id))
             while i < (retries + 1):
                 try:
                     # Getting the corresponding name for each TaxID
-                    each_name = fetchers.get_name_from_id(user_email, each_id)
+                    each_taxon.name = fetchers.get_name_from_id(user_email, each_taxon.taxon_id)
                     log.info(" >>>> Name for '{}' : '{}'\n"
-                             .format(each_id, each_name))
+                             .format(each_taxon.taxon_id, each_taxon.name))
                     break
                 except (KeyboardInterrupt):
                     log.warning("\nQUIT: TaIGa was stopped by the user.\n")
@@ -33,8 +28,8 @@ def retrieve_from_taxid(input_taxid, user_email, retries):
                     # If the name isn't found, ignore this organism for now
                     log.warning(
                             "\n\t>> Couldn't find an organism name for '{}'\n"
-                            .format(each_id))
-                    missing_name.append(each_id) # But append it to the missing list for later printing
+                            .format(each_taxon.taxon_id))
+                    each_taxon.missing_name = True
                     continue
                 except (Exception):
                     log.warning(" * Error, trying again * ")
@@ -45,37 +40,24 @@ def retrieve_from_taxid(input_taxid, user_email, retries):
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except (Exception):
-            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n".format(each_id))
+            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n"
+                        .format(each_taxon.taxon_id))
         # Searching for each GenomeID associated to each name
         try:
-            g_id = search(user_email, "genome", each_name)
+            each_taxon.genome_id = search(user_email, "genome", each_taxon.name)
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user.\n")
             sys.exit()
         except (IndexError):
-            g_id = '-'
+            each_taxon.genome_id = "N/A"
         except (NameError):
-            log.warning("\nERROR: No genome ID found for organism '{}'. TaIGa probably didn't find the organism name for this TaxID.\n".format(each_id))
+            log.warning("\nERROR: No genome ID found for organism '{}'. TaIGa probably didn't find\
+                        the organism name for this TaxID.\n".format(each_taxon.taxon_id))
             continue
         except (Exception):
-            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n".format(each_id))
-        # Adding the name, TaxID and GenomeID to each its own list
-        try:
-            taxon_ids_collection[each_name] = each_id
-            genome_ids_collection[each_name] = g_id
-        except (NameError):
-            log.warning(
-                "\n\t>> Will ignore organism '{}' for now. Try to handle it manually later.\n"
-                .format(each_name))
-        except (KeyboardInterrupt):
-            log.warning("\nQUIT: TaIGa was stopped by the user.\n")
-            sys.exit()
-        except (Exception):
-            log.warning(
-                "\n\t>> Unknown error occurred while trying to save the TaxID for organism '{}'.\n"
-                .format(each_name))
+            log.warning("\nERROR: An unknown error occurred while searching Taxonomy for '{}'.\n"
+                        .format(each_taxon.taxon_id))
 
-    return (taxon_ids_collection, genome_ids_collection, missing_name)
 
 
 def retrieve_from_multiple_names(input_names, user_email, c, retries):
@@ -124,7 +106,7 @@ def retrieve_from_multiple_names(input_names, user_email, c, retries):
         while i < (retries + 1):
             try:
                 t_id = fetchers.search(user_email, "taxonomy", correct_name)
-                log.info(" >>>> TaxID for '{}' : '{}'".format(correct_name, 
+                log.info(" >>>> TaxID for '{}' : '{}'".format(correct_name,
                                                               t_id))
                 try:
                     g_id = fetchers.search(user_email, "genome", correct_name)
@@ -223,7 +205,7 @@ def retrieve_from_single_name(input_names, user_email, c, retries):
             log.info(" >>>> TaxID for '{}' : '{}'".format(correct_name, t_id))
             try:
                 g_id = fetchers.search(user_email, "genome", correct_name)
-                log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))            
+                log.info(" >>>> Genome ID for '{}' : '{}'\n".format(correct_name, g_id))
             except (IndexError):
                 g_id = '-'
                 log.warning(" >>>> Organism '{}' doesn't seem to have a valid genome ID, so assigning '-' as a placeholder.\n".format(correct_name))
