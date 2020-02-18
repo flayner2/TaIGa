@@ -8,15 +8,6 @@ def sanitize_version():
         Please, try again with 'python3 TaIGa.py' or 'python3.6 TaIGa.py'.""")
 
 
-def sanitize_args(args):
-    if ((args.multi and (args.same or args.single or args.tid))
-       or (args.same and (args.multi or args.single or args.tid))
-       or (args.single and (args.same or args.multi or args.tid))
-       or (args.tid and (args.same or args.single or args.multi))):
-        log.error("\nERROR: Please run TaIGa with only one of the possible input type optional arguments.")
-        sys.exit()
-
-
 def config_log(verbose):
     if verbose:
         log.basicConfig(

@@ -2,3 +2,6 @@
 env/
 .vscode/
 */**/__pycache__
+*.gbff
+test.txt
+results/
