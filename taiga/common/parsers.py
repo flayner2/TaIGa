@@ -23,7 +23,8 @@ def parse_txt(input_path, tid):
         log.info("\n>> Parsing input file a simple list of species names.\n")
 
         with open(input_path, "r") as infile:
-            all_inputs = infile.readlines()
+            # Using set to uniquefy possible duplicate names or IDs from the input
+            all_inputs = set(infile.readlines())
 
             # Checks first if input file is an ids or names file
             if tid:

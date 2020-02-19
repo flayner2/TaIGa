@@ -68,7 +68,7 @@ def run_taiga():
     output_path = args.outdir + '/' if args.outdir[-1] != '/' else args.outdir
     # Providing the email when doing requests through E-Utils is recommended
     user_email = args.email
-    # TODO: maybe use the biopython native approach instead.
+    # This will be used to set the value for Entrez.max_tries
     retries = args.t[-1]
     verbose = args.v
     correction = args.c
@@ -102,67 +102,32 @@ def run_taiga():
         taxon_list = parsers.parse_gb(input_path, mode)
     else:
         taxon_list = parsers.parse_txt(input_path, tid)
-    
+
     log.info("\n>> Ignore if any duplicate name was printed, duplicates are removed.")
 
     log.info("\n>> Searching for taxonomic information...\n")
 
-    # Checking if the input is a list of TaxIDs instead of any type of name input
+    # Checking the type of input (taxon id or names) and fetching the rest of the information
     if tid:
         retrievers.retrieve_from_taxid(taxon_list, user_email, retries)
-    # Checking if there are multiple records on the file (for different organisms)
-    elif type(taxon_list) == list:
-        missing_corrected, \
-            missing_taxid, \
-            taxon_ids_collection, \
-            genome_ids_collection = retrievers.retrieve_from_multiple_names(
-                taxon_list,
-                user_email,
-                correction,
-                retries)
-        print(taxon_ids_collection)
-    else:  # If there's only one record, or only one organism, a loop isn't needed
-        missing_corrected, \
-            missing_taxid, \
-            taxon_ids_collection, \
-            genome_ids_collection = retrievers.retrieve_from_single_name(
-                taxon_list,
-                user_email,
-                correction,
-                retries)
+    else:
+        retrievers.retrieve_from_names(taxon_list, user_email, correction, retries)
 
-    try:
-        helpers.sanitize_name_list(correction, tid,
-                                   missing_corrected, missing_taxid,
-                                   taxon_list)
+    retrievers.retrieve_taxonomy(taxon_list, user_email, retries)
 
-        tax_info = retrievers.get_tax_info(
-            user_email,
-            taxon_ids_collection,
-            retries)
+    frame = data_handlers.create_df(
+        taxon_ids_collection,
+        genome_ids_collection,
+        tax_info,
+        tid,
+        taxon_list)
 
-        frame = data_handlers.create_df(
-            taxon_ids_collection,
-            genome_ids_collection,
-            tax_info,
-            tid,
-            taxon_list)
-
-        data_handlers.create_output(
-            output_path,
-            frame,
-            missing_corrected,
-            missing_taxid,
-            missing_name)
-    except (KeyboardInterrupt):
-        log.warning("\nQUIT: TaIGa was stopped by the user.\n")
-        sys.exit()
-    except (IndexError):
-        log.error("\nQUIT: Too many broken responses.")
-        sys.exit()
-    except (Exception):
-        log.error("\nQUIT: Unknown error occured while generating output files.")
-        sys.exit()
+    data_handlers.create_output(
+        output_path,
+        frame,
+        missing_corrected,
+        missing_taxid,
+        missing_name)
 
     log.info(
         "\n>> TaIGa was run successfully! You can check your results on the informed output folder.\
