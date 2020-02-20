@@ -5,8 +5,19 @@ import os
 
 
 def create_df(taxon_list):
-    # Done finishing the tax_info dictionary, print a message informing the next step
-    log.info(">> Generating result table")
+    """Creates a Pandas DataFrame with the information for each input taxon
+
+    Parameters:
+    taxon_list (list): A list with all the Taxa the will provide the input information for the
+                       DataFrame
+
+    Returns:
+    frame (DataFrame): A Pandas DataFrame object with all the taxonomic information organized for
+                       each taxon
+
+    """
+
+    log.info("\n> Generating result DataFrame")
 
     # Headers set, will store all possible ranks from the input taxa
     raw_ranks = set()
@@ -17,11 +28,11 @@ def create_df(taxon_list):
 
     # To preserve the order, a list with all possible ranks from NCBI taxonomy is constructed
     ordered_ranks = [
-        'no rank', 'superkingdom', 'kingdom', 'subkingdom', 'phylum', 'subphylum',
-        'superclass', 'class', 'subclass', 'infraclass', 'cohort', 'subcohort',
-        'superorder', 'order', 'suborder', 'infraorder', 'parvorder', 'superfamily',
-        'family', 'subfamily', 'tribe', 'subtribe', 'genus', 'subgenus', 'section',
-        'subsection', 'series', 'species-group', 'species', 'subspecies', 'forma'
+        "no rank", "superkingdom", "kingdom", "subkingdom", "phylum", "subphylum",
+        "superclass", "class", "subclass", "infraclass", "cohort", "subcohort",
+        "superorder", "order", "suborder", "infraorder", "parvorder", "superfamily",
+        "family", "subfamily", "tribe", "subtribe", "genus", "subgenus", "section",
+        "subsection", "series", "species-group", "species", "subspecies", "forma"
     ]
 
     # To assure only ranks existing in the input taxa are part of the header, filter the list
@@ -40,8 +51,8 @@ def create_df(taxon_list):
 
     # Add the values for taxon id and genome id for each taxon
     for taxon in taxon_list:
-        frame.at[taxon.name, 'taxon_id'] = taxon.taxon_id
-        frame.at[taxon.name, 'genome_id'] = taxon.genome_id
+        frame.at[taxon.name, "taxon_id"] = taxon.taxon_id
+        frame.at[taxon.name, "genome_id"] = taxon.genome_id
 
     # Convert the taxon id and genome id to integers
     frame.taxon_id = frame.taxon_id.astype(int)
@@ -50,35 +61,42 @@ def create_df(taxon_list):
     # Change all 'NaN' occurences for 'N/A'
     frame.fillna("N/A", inplace=True)
 
-    log.info("\n>> Done generating result table")
+    log.info("\n> Done generating result DataFrame")
 
     return frame
 
 
 def create_output(output_path, frame, taxon_list):
-    log.info(
-        "\n>> Checking if output folder exists")
-    # Check if the output directory exists. If not, create it.
+    """Creates the output directories (if they don't exist) and files for TaIGa
+
+    Parameters:
+    output_path (string): The path to the output folder as a string. It doesn't need to exist
+    frame (DataFrame): The DataFrame containing all the information for all Taxa
+    taxon_list (list): A list of Taxa objects used to create the file with the missing information
+
+    Returns:
+    None
+
+    """
+    log.info("\n> Checking if output folder exists")
+
     if not os.path.exists(output_path):
-        log.info("\n>> Creating output folder")
-        try:  # Checking if the path for the output folder is valid
+        log.info("\n> Creating output folder")
+
+        try:
             os.makedirs(output_path)
         except (Exception):
-            log.error(
-                "\nERROR: Path to output folder may not be valid. Try again.")
+            log.error("\nERROR: Path to output folder may not be valid. Try again\n")
             sys.exit()
 
-    log.info(
-        "\n>> Creating output file. You'll find it inside the provided output folder, named 'TaIGa_result.csv'"
-    )
-    # Export the DataFrame to the resulting .csv file
-    frame.to_csv(output_path + 'TaIGa_result.csv')
+    log.info("\n> Creating output file. You'll find it inside the provided output folder")
 
-    # Checking if there are missing correct names or TaxIDs. If there are, generating log files for those.
-    log.info(
-        "\n>> Creating a file for the organisms with missing information. You'll find it inside the provided output folder, named 'TaIGa_missing.txt'"
-    )
-    with open(output_path + 'TaIGa_missing.txt', 'w') as missing_file:
+    # Export the DataFrame to the resulting .csv file
+    frame.to_csv(output_path + "TaIGa_result.csv")
+
+    log.info("\n> Creating a file for the organisms with missing information. It might be empty")
+
+    with open(output_path + "TaIGa_missing.txt", "w") as missing_file:
         missing_file.write("Missing corrected names: \n")
         for taxon in taxon_list:
             if taxon.missing_corrected:
