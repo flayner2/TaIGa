@@ -53,7 +53,7 @@ def run_taiga():
         "-t",
         help="Set the maximum ammount of retries for TaIGa's requests. By default, this number is\
         5.",
-        nargs=1, default="5", type=int)
+        nargs=1, default=5, type=int)
     taiga.add_argument(
         "-v",
         help="Turn off TaIGa's standard verbose mode. This way, all prints that would usually go to\
@@ -62,18 +62,18 @@ def run_taiga():
         action="store_true")
 
     args = taiga.parse_args()
-
+    
     input_path = args.infile
     # Add an ending forward slash to output path if needed
     output_path = args.outdir + '/' if args.outdir[-1] != '/' else args.outdir
     # Providing the email when doing requests through E-Utils is recommended
     user_email = args.email
     # This will be used to set the value for Entrez.max_tries
-    retries = args.t[-1]
+    retries = args.t
     verbose = args.v
     correction = args.c
     tid = args.tid
-    mode = args.mode
+    mode = args.mode[-1]
 
     # A list to hold Taxon objects
     taxon_list = []
@@ -115,19 +115,9 @@ def run_taiga():
 
     retrievers.retrieve_taxonomy(taxon_list, user_email, retries)
 
-    frame = data_handlers.create_df(
-        taxon_ids_collection,
-        genome_ids_collection,
-        tax_info,
-        tid,
-        taxon_list)
+    frame = data_handlers.create_df(taxon_list)
 
-    data_handlers.create_output(
-        output_path,
-        frame,
-        missing_corrected,
-        missing_taxid,
-        missing_name)
+    data_handlers.create_output(output_path, frame, taxon_list)
 
     log.info(
         "\n>> TaIGa was run successfully! You can check your results on the informed output folder.\

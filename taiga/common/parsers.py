@@ -43,7 +43,7 @@ def parse_txt(input_path, tid):
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user.\n")
         sys.exit()
-    except (Exception): # TODO: improve generic exception handling
+    except (Exception):  # TODO: improve generic exception handling
         log.error(
             "\nERROR: Couldn't parse input text file. Check your file an try running TaIGa again.\n"
         )
@@ -58,9 +58,9 @@ def parse_gb(input_path, mode):
     Parameters:
     input_path (string): The path to the input file as a string.
     mode (int): An integer representing the reading mode for the input file. Options are:
-        1: genbank file with multiple records from different organisms
-        2: genbank file with a single record from a single organism
-        3: genbank file with multiple records from a single organism
+                1: genbank file with multiple records from different organisms
+                2: genbank file with a single record from a single organism
+                3: genbank file with multiple records from the same organism
 
     Returns:
     list_of_taxa: A list of Taxon objects, each containing a self.name value for each record
@@ -75,7 +75,7 @@ def parse_gb(input_path, mode):
             log.info("\n>> Parsing input as a Genbank file with multiple records for multiple organisms.\n")
 
             input_records = SeqIO.parse(input_path, "genbank")
-
+            
             list_of_taxa = [Taxon(name=seq.annotations["organism"]) for seq in input_records]
         elif mode == 2:
             log.info("\n>> Parsing input as a Genbank file with a single record.\n")
@@ -105,11 +105,8 @@ def parse_gb(input_path, mode):
         )
         sys.exit()
 
-
     if list_of_taxa:
-        log.info(
-            "\n>> All OK with parsing the input file. Checking the records...\n"
-        )
+        log.info("\n>> All OK with parsing the input file. Checking the records...\n")
         for taxon in list_of_taxa:
             log.info("> '{}' ---> All OK".format(taxon.name))
     else:

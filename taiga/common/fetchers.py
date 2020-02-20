@@ -1,4 +1,5 @@
 from Bio import Entrez
+from urllib.error import HTTPError
 import logging as log
 import sys
 
@@ -21,6 +22,8 @@ def fetch_taxonomic_info(user_email, taxon, retries):
     Entrez.email = user_email
     Entrez.max_tries = retries
     Entrez.sleep_between_tries = 15
+    # For some reason, we have to initialize the empty dict
+    taxon.classification = dict()
 
     try:
         query = Entrez.efetch(db="taxonomy", id=taxon.taxon_id, retmode="xml")
@@ -29,9 +32,18 @@ def fetch_taxonomic_info(user_email, taxon, retries):
         taxonomic_info = parsed[0]["LineageEx"]
 
         for taxon_level in taxonomic_info:
-            taxon.classification[taxon_level["Rank"]] = taxon_level["ScientificName"]
+            if taxon_level["Rank"] == "no rank":
+                if "no rank" not in list(taxon.classification):
+                    taxon.classification[taxon_level["Rank"]] = []
+                taxon.classification[taxon_level["Rank"]].append(taxon_level["ScientificName"])
+            else:
+                taxon.classification[taxon_level["Rank"]] = taxon_level["ScientificName"]
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user.\n")
+        sys.exit()
+    except (HTTPError):
+        log.warning("\nERROR: Connection error. It could be due to a lack of internet connection "
+                    "or a broken response from the NCBI servers. Try again a bit later.")
         sys.exit()
     except (IndexError):
         log.error("\nERROR: Couldn't fetch taxonomic information for organism '{}'"

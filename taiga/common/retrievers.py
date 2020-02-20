@@ -24,7 +24,7 @@ def retrieve_from_taxid(taxon_list, user_email, retries):
 
             fetchers.fetch_name_from_taxon_id(user_email, each_taxon, retries)
 
-            fetchers.fetch_id_from_name(user_email, "genome", each_taxon)
+            fetchers.fetch_id_from_name(user_email, "genome", each_taxon, retries)
 
             log.info(' >>>> Name and genome ID for "{}" : "{}" | "{}"\n'
                      .format(each_taxon.taxon_id, each_taxon.name, each_taxon.genome_id))
@@ -58,11 +58,11 @@ def retrieve_from_names(taxon_list, user_email, correction, retries):
 
             log.info("> Searching TaxID and genome ID of organism '{}'".format(each_taxon.name))
 
-            fetchers.fetch_id_from_name(user_email, "taxonomy", each_taxon)
+            fetchers.fetch_id_from_name(user_email, "taxonomy", each_taxon, retries)
 
             log.info(" >>>> TaxID for '{}' : '{}'".format(each_taxon.name, each_taxon.taxon_id))
 
-            fetchers.fetch_id_from_name(user_email, "genome", each_taxon)
+            fetchers.fetch_id_from_name(user_email, "genome", each_taxon, retries)
 
             log.info(" >>>> Genome ID for '{}' : '{}'\n".format(each_taxon.name,
                                                                 each_taxon.genome_id))
