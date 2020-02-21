@@ -24,13 +24,13 @@ TaIGa is developed and maintained by Maycon Douglas de Oliveira, 2020.
 ### 1.2 Installing dependencies
 
 - **Python**: 
-⋅⋅⋅You might want to use your own package manager and installation procedures to run TaIGa. Most Unix distributions come with 
+ ⋅⋅⋅You might want to use your own package manager and installation procedures to run TaIGa. Most Unix distributions come with 
 Python 3 installed. You can try typing `$ python` into your shell to verify it (note that the `$` character should not be typed, 
 it only represents the prompt). If you don't have Python 3 installed, check the [Python official website](https://www.python.org/) 
 for how to install it on your system.
 
 - **Biopython** and **Pandas**:
-⋅⋅⋅Make sure you have Python and its package manager [pip](https://pypi.org/project/pip/) installed. After that, all you need to do 
+ ⋅⋅⋅Make sure you have Python and its package manager [pip](https://pypi.org/project/pip/) installed. After that, all you need to do 
 is type `pip install --user biopython pandas` and it shall be done. If you're too scared of manually installing these dependencies, 
 you could also run the command `make install-deps` from inside the TaIGa root directory. Note that this script calls pip in order 
 to run, so you still need to install it. Additionally, you will also need a [C compiler](https://gcc.gnu.org/) and 
