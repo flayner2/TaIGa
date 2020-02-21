@@ -43,7 +43,7 @@ versions installed on your machine and that one of them is python3.6. It might b
 greater (eg. python3.7) installed or that the command "python" is an alias for any python version >= 3.6. In those cases, 
 running TaIGa with only "python" instead of "python3.6" is totally fine.
 
-To run TaIGa, on your command line, from the TaIGa root directory, type the following:
+First, clone or download this repository. Then, to run TaIGa on your command line, from the TaIGa root directory, type the following:
     
 ```shell
 $ python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
