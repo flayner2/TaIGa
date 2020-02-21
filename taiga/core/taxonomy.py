@@ -72,14 +72,20 @@ def run_taiga():
     user_email = args.email
 
     # Minor config variables for some of TaIGa's functionalities
-    retries = args.t
+    if type(args.t) is int:
+        retries = args.t
+    else:
+        retries = args.t[-1]
     verbose = args.v
     correction = args.c
 
     # The switches for TaIGa's execution modes, either for Taxon IDs or Genbank files
     tid = args.tid
-    mode = args.mode[-1]
-
+    if type(args.mode) is int:
+        mode = args.mode
+    else:
+        mode = args.mode[-1]
+    
     # A list to hold Taxon objects
     taxon_list = []
 

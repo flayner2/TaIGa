@@ -29,9 +29,12 @@ def parse_txt(input_path, tid):
             # Checks first if input file is an ids or names file
             if tid:
                 for each_id in all_inputs:
-                    list_of_taxa.append(Taxon(taxon_id=each_id))
+                    # Each taxon might contain a '\n' character at the end, so remove it
+                    new_id = Taxon(taxon_id=each_id.replace("\n", ""))
+                    
+                    list_of_taxa.append(new_id)
 
-                    log.info("{} ---> All OK".format(each_id))
+                    log.info("{} ---> All OK".format(new_id.taxon_id))
             else:
                 for each_taxon in all_inputs:
                     # Each taxon might contain a '\n' character at the end, so remove it
@@ -39,7 +42,7 @@ def parse_txt(input_path, tid):
 
                     list_of_taxa.append(new_taxon)
 
-                    log.info("{} ---> All OK".format(each_taxon))
+                    log.info("{} ---> All OK".format(new_taxon.name))
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user\n")
         sys.exit()
