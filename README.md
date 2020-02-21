@@ -25,7 +25,7 @@ TaIGa is developed and maintained by Maycon Douglas de Oliveira, 2020.
 
 - **Python**: 
 ...You might want to use your own package manager and installation procedures to run TaIGa. Most Unix distributions come with 
-Python 3 installed. You can try typing `$ python` into your shell to verify it (note that the `$` character should not be type, 
+Python 3 installed. You can try typing `$ python` into your shell to verify it (note that the `$` character should not be typed, 
 it only represents the prompt). If you don't have Python 3 installed, check the [Python official website](https://www.python.org/) 
 for how to install it on your system.
 
