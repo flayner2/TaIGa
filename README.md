@@ -211,7 +211,7 @@ now legacy (TaIGa's code was heavily changed), and it lied on how differently Py
 objects like dictionaries. TaIGa doesn't rely on that functionality anymore (at least to my capacity), but it was coded taking in
 account all syntax an functionalities of Python 3.6.x, as well as its dependencies. So, for the sake of safety, TaIGa will always
 check the Python version used to run it before it actually tries to run, and will throw an error and quit if your Python version is
-less than 3.6.x. If you don't want this functionality, you can simply go to the file `taiga/taiga` (from the root TaIGa directory) 
+less than 3.6.x. If you don't want this functionality, you can simply go to the file `taiga/taiga.py` (from the root TaIGa directory) 
 and comment the line that says `helpers.sanitize_version()`. This should disable the version checking and should not break anything
 else in the code.
 
