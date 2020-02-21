@@ -52,7 +52,7 @@ $ python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional argum
 or:
 
 ```shell    
-path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
+$ path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
 ```
 
 **Note**: The `-m` after the Python call is very important and TaIGa will not run if you forget it.
@@ -60,13 +60,13 @@ path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional
 If you want further information on how to run TaIGa and what are the required and optional arguments, you may run:
     
 ```shell
-python3.6 -m taiga -h
+$ python3.6 -m taiga -h
 ```
     
 or:
     
 ```shell
-path/to/python3.6 -m taiga -h
+$ path/to/python3.6 -m taiga -h
 ```
 
 For further explanation on the required and optional arguments, refer to this same documentation in the **Arguments** section below.
@@ -79,7 +79,7 @@ There, you will find a file called `inputs.tar.gz`. It contains input files for 
 unzip it and then issue the following command (again, from the TaIGa root directory):
 
 ```shell
-python3.6 -m taiga taiga/examples/[name_of_input_file] [output_folder] [user_email] --[mode]
+$ python3.6 -m taiga taiga/examples/[name_of_input_file] [output_folder] [user_email] --[mode]
 ```
 
 **The --[mode] argument**: this will be better explained further down, but this argument will change the expected input file type.
@@ -95,7 +95,7 @@ default input type (text file with names).
 ### 2.1 Positional (required) Arguments:
 
 ```shell
-python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
+$ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 **[input file]**: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a 
@@ -118,7 +118,7 @@ you not to. TaIGa will run fine anyways, as long as you provide something to thi
 ### 2.2 Optional Arguments:
 
 ```shell
-python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
+$ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 **--gb-mode [0, 1, 2, 3]**: *Default: 0*. This changes TaIGa's default input type to instead expect a Genbank format file. This 
