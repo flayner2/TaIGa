@@ -1,13 +1,14 @@
 # TaIGa - *Ta*xonomy *I*nformation *Ga*therer
 
-This is a simple script that interacts with various utilities from NCBI's Entrez api in order to retrieve relevant taxonomic 
-information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format files, as 
-well as a text file format list of organism names or Taxon IDs, separated by lines. TaIGa recieves a file as input, an output 
-folder path, a valid user e-mail and a variety of optional arguments. TaIGa uses Entrez to retrieve the Taxon ID, Genome ID and all 
-taxonomic information for the provided organisms. Then, it builds a DataFrame and outputs it to a .csv file, so the user can visuali
-ze it as a table. TaIGa's goal is to make easier for researchers to gather mass taxonomical metadata for their projects. Therefore, 
-TaIGa is best used when you have a big list of organisms or a big collection of genomes in a file. TaIGa is also a very cute anime 
-character from the Japanese romance animation ToraDora. You should watch it. 
+This is a simple program that interacts with various utilities from NCBI's Entrez api in order to retrieve relevant
+taxonomic information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format
+files, as well as a text file format list of organism names or Taxon IDs, separated by lines. TaIGa recieves a file as 
+input, an output folder path, a valid user e-mail and a variety of optional arguments. TaIGa uses Entrez to retrieve the 
+Taxon ID, Genome ID and all taxonomic information for the provided organisms. Then, it builds a DataFrame and outputs it to 
+a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass 
+taxonomic metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big 
+collection of genomes in a file. TaIGa is also a very cute anime character from the Japanese romance animation ToraDora. You 
+should watch it. 
 
 TaIGa is developed and maintained by Maycon Douglas de Oliveira, 2020. 
 
