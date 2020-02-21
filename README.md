@@ -1,13 +1,14 @@
 # TaIGa - *Ta*xonomy *I*nformation *Ga*therer
 
-This is a simple script that interacts with various utilities from NCBI's Entrez api in order to retrieve relevant taxonomic 
-information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format files, as 
-well as a text file format list of organism names or Taxon IDs, separated by lines. TaIGa recieves a file as input, an output 
-folder path, a valid user e-mail and a variety of optional arguments. TaIGa uses Entrez to retrieve the Taxon ID, Genome ID and all 
-taxonomic information for the provided organisms. Then, it builds a DataFrame and outputs it to a .csv file, so the user can visuali
-ze it as a table. TaIGa's goal is to make easier for researchers to gather mass taxonomical metadata for their projects. Therefore, 
-TaIGa is best used when you have a big list of organisms or a big collection of genomes in a file. TaIGa is also a very cute anime 
-character from the Japanese romance animation ToraDora. You should watch it. 
+This is a simple program that interacts with various utilities from NCBI's Entrez api in order to retrieve relevant
+taxonomic information for a collection of organisms. As of now, TaIGa is able to handle multiple types of Genbank format
+files, as well as a text file format list of organism names or Taxon IDs, separated by lines. TaIGa recieves a file as 
+input, an output folder path, a valid user e-mail and a variety of optional arguments. TaIGa uses Entrez to retrieve the 
+Taxon ID, Genome ID and all taxonomic information for the provided organisms. Then, it builds a DataFrame and outputs it to 
+a .csv file, so the user can visualize it as a table. TaIGa's goal is to make easier for researchers to gather mass 
+taxonomic metadata for their projects. Therefore, TaIGa is best used when you have a big list of organisms or a big 
+collection of genomes in a file. TaIGa is also a very cute anime character from the Japanese romance animation ToraDora. You 
+should watch it. 
 
 TaIGa is developed and maintained by Maycon Douglas de Oliveira, 2020. 
 
@@ -24,7 +25,7 @@ TaIGa is developed and maintained by Maycon Douglas de Oliveira, 2020.
 
 - **Python**: 
 ...You might want to use your own package manager and installation procedures to run TaIGa. Most Unix distributions come with 
-Python 3 installed. You can try typing `$ python` into your shell to verify it (note that the `$` character should not be type, 
+Python 3 installed. You can try typing `$ python` into your shell to verify it (note that the `$` character should not be typed, 
 it only represents the prompt). If you don't have Python 3 installed, check the [Python official website](https://www.python.org/) 
 for how to install it on your system.
 
@@ -51,7 +52,7 @@ $ python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional argum
 or:
 
 ```shell    
-path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
+$ path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
 ```
 
 **Note**: The `-m` after the Python call is very important and TaIGa will not run if you forget it.
@@ -59,13 +60,13 @@ path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional
 If you want further information on how to run TaIGa and what are the required and optional arguments, you may run:
     
 ```shell
-python3.6 -m taiga -h
+$ python3.6 -m taiga -h
 ```
     
 or:
     
 ```shell
-path/to/python3.6 -m taiga -h
+$ path/to/python3.6 -m taiga -h
 ```
 
 For further explanation on the required and optional arguments, refer to this same documentation in the **Arguments** section below.
@@ -78,7 +79,7 @@ There, you will find a file called `inputs.tar.gz`. It contains input files for 
 unzip it and then issue the following command (again, from the TaIGa root directory):
 
 ```shell
-python3.6 -m taiga taiga/examples/[name_of_input_file] [output_folder] [user_email] --[mode]
+$ python3.6 -m taiga taiga/examples/[name_of_input_file] [output_folder] [user_email] --[mode]
 ```
 
 **The --[mode] argument**: this will be better explained further down, but this argument will change the expected input file type.
@@ -94,7 +95,7 @@ default input type (text file with names).
 ### 2.1 Positional (required) Arguments:
 
 ```shell
-python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
+$ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 **[input file]**: This is the full path to the file you will use as an input for TaIGa. By default, TaIGa expects it to be a 
@@ -117,7 +118,7 @@ you not to. TaIGa will run fine anyways, as long as you provide something to thi
 ### 2.2 Optional Arguments:
 
 ```shell
-python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
+$ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 **--gb-mode [0, 1, 2, 3]**: *Default: 0*. This changes TaIGa's default input type to instead expect a Genbank format file. This 
