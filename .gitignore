@@ -2,8 +2,7 @@
 env/
 .vscode/
 */**/__pycache__
-*/**/.ropeproject
-.ropeproject
 *.gbff
 test.txt
 results/
+.ycm_extra_conf.py
