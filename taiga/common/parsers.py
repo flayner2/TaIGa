@@ -20,7 +20,6 @@ def parse_txt(input_path, tid):
     list_of_taxa = []
 
     try:
-        log.info("\n> Parsing input file a simple list of species names")
 
         with open(input_path, "r") as infile:
             # Using set to uniquefy possible duplicate names or IDs from the input
@@ -28,14 +27,18 @@ def parse_txt(input_path, tid):
 
             # Checks first if input file is an ids or names file
             if tid:
+                log.info("\n> Parsing input file a simple list of Taxon IDs\n")
+
                 for each_id in all_inputs:
                     # Each taxon might contain a '\n' character at the end, so remove it
                     new_id = Taxon(taxon_id=each_id.replace("\n", ""))
-                    
+
                     list_of_taxa.append(new_id)
 
                     log.info("{} ---> All OK".format(new_id.taxon_id))
             else:
+                log.info("\n> Parsing input file a simple list of species names\n")
+
                 for each_taxon in all_inputs:
                     # Each taxon might contain a '\n' character at the end, so remove it
                     new_taxon = Taxon(name=each_taxon.replace("\n", ""))
@@ -96,7 +99,6 @@ def parse_gb(input_path, mode):
         elif mode == 3:
             log.info("\n> Parsing input as a Genbank file with multiple records for one organism")
 
-
             input_records = SeqIO.parse(input_path, "genbank")
 
             for record in input_records:
@@ -113,7 +115,7 @@ def parse_gb(input_path, mode):
         sys.exit()
 
     if list_of_taxa:
-        log.info("\n> All OK with parsing the input file. Checking the records...")
+        log.info("\n> All OK with parsing the input file. Checking the records...\n")
         for taxon in list_of_taxa:
             log.info("> '{}' ---> All OK".format(taxon.name))
     else:

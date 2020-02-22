@@ -24,7 +24,8 @@ def create_df(taxon_list):
 
     # The header set is a combination of the rank sets from all taxa
     for taxon in taxon_list:
-        raw_ranks |= taxon.list_ranks()
+        if not (taxon.missing_name or taxon.missing_taxon_id):
+            raw_ranks |= taxon.list_ranks()
 
     # To preserve the order, a list with all possible ranks from NCBI taxonomy is constructed
     ordered_ranks = [
@@ -43,16 +44,19 @@ def create_df(taxon_list):
     final_ranks.insert(0, "taxon_id")
 
     # Create lists from the names and classifications of each taxon, in order
-    taxon_names = [taxon.name for taxon in taxon_list]
-    taxon_classification = [taxon.classification for taxon in taxon_list]
+    taxon_names = [taxon.name for taxon in taxon_list if not (taxon.missing_name or
+                                                              taxon.missing_taxon_id)]
+    taxon_classification = [taxon.classification for taxon in taxon_list
+                            if not (taxon.missing_name or taxon.missing_taxon_id)]
 
     # Create a dataframe from the lists of classifications, names and ranks
     frame = pd.DataFrame(taxon_classification, index=taxon_names, columns=final_ranks)
 
     # Add the values for taxon id and genome id for each taxon
     for taxon in taxon_list:
-        frame.at[taxon.name, "taxon_id"] = taxon.taxon_id
-        frame.at[taxon.name, "genome_id"] = taxon.genome_id
+        if not (taxon.missing_name or taxon.missing_taxon_id):
+            frame.at[taxon.name, "taxon_id"] = taxon.taxon_id
+            frame.at[taxon.name, "genome_id"] = taxon.genome_id
 
     # Convert the taxon id and genome id to integers
     frame.taxon_id = frame.taxon_id.astype(int)
@@ -105,7 +109,7 @@ def create_output(output_path, frame, taxon_list):
         missing_file.write("Missing TaxID: \n")
         for taxon in taxon_list:
             if taxon.missing_taxon_id:
-                missing_file.write("\t\t\t{}\n".format(taxon.taxon_id))
+                missing_file.write("\t\t\t{}\n".format(taxon.name))
 
         missing_file.write("TaxIDs with missing names: \n")
         for taxon in taxon_list:
