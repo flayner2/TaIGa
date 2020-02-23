@@ -124,7 +124,7 @@ $ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional argume
 **--gb-mode [0, 1, 2, 3]**: *Default: 0*. This changes TaIGa's default input type to instead expect a Genbank format file. This 
 argument exepects one numeric option from the available ones. Those are:
 
-- *0*: Acts the same as not passing the `--gb-mode argument` at all, not altering TaIGa's default behavior.
+- *0*: Acts the same as not passing the `--gb-mode` argument at all, not altering TaIGa's default behavior.
 - *1*: A Genbank format file containing multiple records from multiple, differently named organisms (eg. *Escherichia coli*, 
 *Bos taurus*, *Mus musculus*, all in the same `.gb` or `.gbff` file).
 - *2*: A Genbank format file containing a single record (eg. an annotation for a *COX 1* gene for *Homo sapiens*).
