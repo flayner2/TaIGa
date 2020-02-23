@@ -46,13 +46,13 @@ running TaIGa with only "python" instead of "python3.6" is totally fine.
 First, clone or download this repository. Then, to run TaIGa on your command line, from the TaIGa root directory, type the following:
     
 ```shell
-$ python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
+$ python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 or:
 
 ```shell    
-$ path/to/python3.6 -m taiga [input file] [output path] [valid e-mail] --[optional arguments]
+$ path/to/python3.6 -m taiga [input file] [output path] [user e-mail] --[optional arguments]
 ```
 
 **Note**: The `-m` after the Python call is very important and TaIGa will not run if you forget it.
