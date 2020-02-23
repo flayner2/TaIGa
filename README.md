@@ -31,8 +31,8 @@ for how to install it on your system.
 
 - **Biopython** and **Pandas**:
    Make sure you have Python and its package manager [pip](https://pypi.org/project/pip/) installed. After that, all you need to do 
-is type `pip install --user biopython pandas` and it shall be done. If you're too scared of manually installing these dependencies, 
-you could also run the command `make install-deps` from inside the TaIGa root directory. Note that this script calls pip in order 
+is type `$ pip install --user biopython pandas` and it shall be done. If you're too scared of manually installing these dependencies, 
+you could also run the command `$ make install-deps` from inside the TaIGa root directory. Note that this script calls pip in order 
 to run, so you still need to install it. Additionally, you will also need a [C compiler](https://gcc.gnu.org/) and 
 [a Make-like software](https://cmake.org/) installed (also check [GNU Make](https://www.gnu.org/software/make/)).
 
