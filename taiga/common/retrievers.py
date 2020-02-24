@@ -68,7 +68,7 @@ def retrieve_from_names(taxon_list, user_email, correction, retries):
             fetchers.fetch_id_from_name(user_email, "genome", each_taxon, retries)
 
             log.info(" >>>> Genome ID for '{}': '{}'".format(each_taxon.name,
-                                                              each_taxon.genome_id))
+                                                             each_taxon.genome_id))
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user\n")
             sys.exit()
@@ -97,10 +97,10 @@ def retrieve_taxonomy(taxon_list, user_email, retries):
                 log.warning("\nQUIT: TaIGa was stopped by the user\n")
                 sys.exit()
         elif each_taxon.missing_name:
-            log.warning("\n>WARNING: Taxon {} is missing critical information. Skipping it..."
+            log.warning("\nWARNING: Taxon {} is missing critical information. Skipping it..."
                         .format(each_taxon.taxon_id))
         elif each_taxon.missing_taxon_id:
-            log.warning("\n>WARNING: Taxon {} is missing critical information. Skipping it..."
+            log.warning("\nWARNING: Taxon {} is missing critical information. Skipping it..."
                         .format(each_taxon.name))
 
     log.info("\n> Done gathering taxonomic information")

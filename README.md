@@ -162,8 +162,8 @@ If there's any missing value (eg., lack of a Genome ID or lack of a *tribe* for 
 
 TaIGa will also create a file named 'TaIGa_missing.txt'. This will be created regardless if TaIGa was able to run without issues or
 any missing information. If any organism happens to be missing one of the core informations TaIGa needs to be able to run (those
-being a valid `Name` or `Corrected Name`, and `Taxon ID`), that organism will be outputed to this file within the correct class of
-missing information.
+being a valid `Name` or `Corrected Name`, `Taxon ID` and `Classification`), that organism will be outputed to this file within the 
+correct class of missing information.
 
 ## 4 Potential issues
  

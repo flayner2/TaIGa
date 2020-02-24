@@ -40,19 +40,20 @@ def fetch_taxonomic_info(user_email, taxon, retries):
         log.warning("\nQUIT: TaIGa was stopped by the user\n")
         sys.exit()
     except (HTTPError):
-        log.error("\nERROR: Connection error. It could be due to a lack of internet connection "
-                  "or a broken response from the NCBI servers. Try again a bit later\n")
-        sys.exit()
+        log.warning("\nWARNING: Connection error while trying to fetch the taxonomic information "
+                    "for {}. It could be due to a lack of internet connection or a broken response "
+                    "from the NCBI servers. Ignoring this taxon for now".format(taxon.name))
+        taxon.missing_classification = True
     except (IndexError):
-        log.error("\nERROR: Couldn't fetch taxonomic information for organism '{}'\n"
-                  .format(taxon.name))
-        sys.exit()
+        log.warning("\nWARNING: Couldn't find the taxonomic information for organism '{}'"
+                    .format(taxon.name))
+        taxon.missing_classification = True
     except (Exception):
-        log.error("\nERROR: Unknown error occurred while trying to fetch the taxonomic information "
-                  "for organism '{}'. It could be due to TaIGa reaching the maximum number of "
-                  "retries or issues with the NCBI servers. Maybe wait and try again a bit later\n"
-                  .format(taxon.name))
-        sys.exit()
+        log.warning("\nWARNING: Unknown error occurred while trying to fetch the taxonomic "
+                    "information for organism '{}'. It could be due to TaIGa reaching the maximum "
+                    "number of retries or issues with the NCBI servers. Maybe wait and try again a "
+                    "bit later".format(taxon.name))
+        taxon.missing_classification = True
 
 
 def fetch_correct_spelling(user_email, taxon, retries):
@@ -118,41 +119,45 @@ def fetch_id_from_name(user_email, db, taxon, retries):
     Entrez.max_tries = retries
     Entrez.sleep_between_tries = 15
 
-    query = Entrez.esearch(db=db, term=taxon.name, retmode="xml")
-    parsed = Entrez.read(query)
+    if not taxon.missing_name:
+        query = Entrez.esearch(db=db, term=taxon.name, retmode="xml")
+        parsed = Entrez.read(query)
 
-    if db == "taxonomy":
-        try:
-            taxon_id = parsed["IdList"][0]
-            taxon.taxon_id = taxon_id
-        except (KeyboardInterrupt):
-            log.warning("\nQUIT: TaIGa was stopped by the user\n")
-            sys.exit()
-        except (IndexError):
-            log.warning("\nWARNING: Couldn't find a valid TaxID for the organism '{}'"
-                        .format(taxon.name))
-            taxon.missing_taxon_id = True
-        except (Exception):
-            log.warning("\nWARNING: Unknown error occurred while trying to find a valid TaxID for "
-                        "organism '{}'".format(taxon.name))
-            taxon.missing_taxon_id = True
-    elif db == "genome":
-        try:
-            genome_id = parsed["IdList"][-1]
-            taxon.genome_id = genome_id
-        except (KeyboardInterrupt):
-            log.warning("\nQUIT: TaIGa was stopped by the user\n")
-            sys.exit()
-        except (IndexError):
-            log.warning("\nWARNING: Couldn't find a Genome ID for oragnism '{}'. It probably "
-                        "doesn't have one available on NCBI".format(taxon.name))
-        except (NameError):
-            log.warning("\nWARNING: No Genome ID found for organism '{}'. TaIGa probably "
-                        "didn't find the organism name for this Taxon ID"
-                        .format(taxon.taxon_id))
-        except (Exception):
-            log.warning("\nWARNING: An unknown error occurred while searching Taxonomy for the "
-                        "Genome ID of '{}'".format(taxon.taxon_id))
+        if db == "taxonomy":
+            try:
+                taxon_id = parsed["IdList"][0]
+                taxon.taxon_id = taxon_id
+            except (KeyboardInterrupt):
+                log.warning("\nQUIT: TaIGa was stopped by the user\n")
+                sys.exit()
+            except (IndexError):
+                log.warning("\nWARNING: Couldn't find a valid Taxon ID for the organism '{}'"
+                            .format(taxon.name))
+                taxon.missing_taxon_id = True
+            except (Exception):
+                log.warning("\nWARNING: Unknown error occurred while trying to find a valid Taxon "
+                            "ID for organism '{}'".format(taxon.name))
+                taxon.missing_taxon_id = True
+        elif db == "genome":
+            try:
+                genome_id = parsed["IdList"][-1]
+                taxon.genome_id = genome_id
+            except (KeyboardInterrupt):
+                log.warning("\nQUIT: TaIGa was stopped by the user\n")
+                sys.exit()
+            except (IndexError):
+                log.warning("\nWARNING: Couldn't find a Genome ID for oragnism '{}'. It probably "
+                            "doesn't have one available on NCBI".format(taxon.name))
+            except (NameError):
+                log.warning("\nWARNING: No Genome ID found for organism '{}'. TaIGa probably "
+                            "didn't find the organism name for this Taxon ID"
+                            .format(taxon.taxon_id))
+            except (Exception):
+                log.warning("\nWARNING: An unknown error occurred while searching Taxonomy for the "
+                            "Genome ID of '{}'".format(taxon.taxon_id))
+    else:
+        log.warning("\nWARNING: Taxon {} is missing a name. Not searching for Taxon or Genome ID"
+                    .format(taxon.taxon_id))
 
 
 def fetch_name_from_taxon_id(user_email, taxon, retries):
@@ -187,6 +192,7 @@ def fetch_name_from_taxon_id(user_email, taxon, retries):
                     .format(taxon.taxon_id))
         taxon.missing_name = True
     except (Exception):
-        log.warning("\nWARNING: An unknown error occurred while searching Taxonomy for '{}'"
+        log.warning("\nWARNING: An unknown error occurred while searching Taxonomy for the name of "
+                    "organism '{}'"
                     .format(taxon.taxon_id))
         taxon.missing_name = True

@@ -1,7 +1,8 @@
 # A Taxon holds all the information parsed an fetched by TaIGa for one organism
 class Taxon:
     def __init__(self, name="", genome_id="N/A", taxon_id="N/A", classification=dict(),
-                 missing_name=False, missing_taxon_id=False, missing_corrected=False):
+                 missing_name=False, missing_taxon_id=False, missing_corrected=False,
+                 missing_classification=False):
         self.name = name
         self.genome_id = genome_id
         self.taxon_id = taxon_id
@@ -9,6 +10,7 @@ class Taxon:
         self.missing_name = missing_name
         self.missing_taxon_id = missing_taxon_id
         self.missing_corrected = missing_corrected
+        self.missing_classification = missing_classification
 
     def list_taxa(self):
         """Returns a list of all the names of the taxon ranks for an organism

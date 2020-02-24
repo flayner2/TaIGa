@@ -24,7 +24,7 @@ def create_df(taxon_list):
 
     # The header set is a combination of the rank sets from all taxa
     for taxon in taxon_list:
-        if not (taxon.missing_name or taxon.missing_taxon_id):
+        if not (taxon.missing_name or taxon.missing_taxon_id or taxon.missing_classification):
             raw_ranks |= taxon.list_ranks()
 
     # To preserve the order, a list with all possible ranks from NCBI taxonomy is constructed
@@ -45,16 +45,18 @@ def create_df(taxon_list):
 
     # Create lists from the names and classifications of each taxon, in order
     taxon_names = [taxon.name for taxon in taxon_list if not (taxon.missing_name or
-                                                              taxon.missing_taxon_id)]
+                                                              taxon.missing_taxon_id or
+                                                              taxon.missing_classification)]
     taxon_classification = [taxon.classification for taxon in taxon_list
-                            if not (taxon.missing_name or taxon.missing_taxon_id)]
+                            if not (taxon.missing_name or taxon.missing_taxon_id
+                                    or taxon.missing_classification)]
 
     # Create a dataframe from the lists of classifications, names and ranks
     frame = pd.DataFrame(taxon_classification, index=taxon_names, columns=final_ranks)
 
     # Add the values for taxon id and genome id for each taxon
     for taxon in taxon_list:
-        if not (taxon.missing_name or taxon.missing_taxon_id):
+        if not (taxon.missing_name or taxon.missing_taxon_id or taxon.missing_classification):
             frame.at[taxon.name, "taxon_id"] = taxon.taxon_id
             frame.at[taxon.name, "genome_id"] = taxon.genome_id
 
@@ -101,17 +103,25 @@ def create_output(output_path, frame, taxon_list):
     log.info("\n> Creating a file for the organisms with missing information. It might be empty")
 
     with open(output_path + "TaIGa_missing.txt", "w") as missing_file:
-        missing_file.write("Missing corrected names: \n")
+        missing_file.write("Missing corrected name: \n")
         for taxon in taxon_list:
             if taxon.missing_corrected:
-                missing_file.write("\t\t\t{}\n".format(taxon.name))
+                missing_file.write("\t{}\n".format(taxon.name))
 
-        missing_file.write("Missing TaxID: \n")
+        missing_file.write("Missing Taxon ID: \n")
         for taxon in taxon_list:
             if taxon.missing_taxon_id:
-                missing_file.write("\t\t\t{}\n".format(taxon.name))
+                missing_file.write("\t{}\n".format(taxon.name))
 
-        missing_file.write("TaxIDs with missing names: \n")
+        missing_file.write("Missing name: \n")
         for taxon in taxon_list:
             if taxon.missing_name:
-                missing_file.write("\t\t\t{}\n".format(taxon.taxon_id))
+                missing_file.write("\t{}\n".format(taxon.taxon_id))
+
+        missing_file.write("Missing classification: \n")
+        for taxon in taxon_list:
+            if taxon.missing_classification:
+                if not taxon.missing_name:
+                    missing_file.write("\t{}\n".format(taxon.name))
+                else:
+                    missing_file.write("\t{}\n".format(taxon.taxon_id))
