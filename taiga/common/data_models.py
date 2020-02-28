@@ -1,6 +1,6 @@
 # A Taxon holds all the information parsed an fetched by TaIGa for one organism
 class Taxon:
-    def __init__(self, name="", genome_id="N/A", taxon_id="N/A", classification=dict(),
+    def __init__(self, name=None, genome_id=None, taxon_id=None, classification=dict(),
                  missing_name=False, missing_taxon_id=False, missing_corrected=False,
                  missing_classification=False):
         self.name = name

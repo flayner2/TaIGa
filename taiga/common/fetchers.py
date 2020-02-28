@@ -126,7 +126,7 @@ def fetch_id_from_name(user_email, db, taxon, retries):
         if db == "taxonomy":
             try:
                 taxon_id = parsed["IdList"][0]
-                taxon.taxon_id = taxon_id
+                taxon.taxon_id = int(taxon_id)
             except (KeyboardInterrupt):
                 log.warning("\nQUIT: TaIGa was stopped by the user\n")
                 sys.exit()
@@ -141,7 +141,7 @@ def fetch_id_from_name(user_email, db, taxon, retries):
         elif db == "genome":
             try:
                 genome_id = parsed["IdList"][-1]
-                taxon.genome_id = genome_id
+                taxon.genome_id = int(genome_id)
             except (KeyboardInterrupt):
                 log.warning("\nQUIT: TaIGa was stopped by the user\n")
                 sys.exit()

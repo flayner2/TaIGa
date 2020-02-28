@@ -54,15 +54,14 @@ def create_df(taxon_list):
     # Create a dataframe from the lists of classifications, names and ranks
     frame = pd.DataFrame(taxon_classification, index=taxon_names, columns=final_ranks)
 
-    # Add the values for taxon id and genome id for each taxon
+    # Add the values for Taxon ID and Genome ID for each taxon
     for taxon in taxon_list:
         if not (taxon.missing_name or taxon.missing_taxon_id or taxon.missing_classification):
             frame.at[taxon.name, "taxon_id"] = taxon.taxon_id
             frame.at[taxon.name, "genome_id"] = taxon.genome_id
 
-    # Convert the taxon id and genome id to integers
+    # Convert the Taxon IDs to integers
     frame.taxon_id = frame.taxon_id.astype(int)
-    frame.genome_id = frame.genome_id.astype(int)
 
     # Change all 'NaN' occurences for 'N/A'
     frame.fillna("N/A", inplace=True)

@@ -31,7 +31,7 @@ def parse_txt(input_path, tid):
 
                 for each_id in all_inputs:
                     # Each taxon might contain a '\n' character at the end, so remove it
-                    new_id = Taxon(taxon_id=each_id.replace("\n", ""))
+                    new_id = Taxon(taxon_id=int(each_id.replace("\n", "")))
 
                     list_of_taxa.append(new_id)
 
