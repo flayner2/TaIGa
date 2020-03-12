@@ -19,17 +19,19 @@ def retrieve_from_taxid(taxon_list, user_email, retries):
 
     for each_taxon in taxon_list:
         try:
-            log.info("\n> Searching for corresponding organism name and Genome ID of '{}'"
-                     .format(each_taxon.taxon_id))
+            log.info("\n> Searching for corresponding organism name and Genome ID of "
+                     f"'{each_taxon.taxon_id}'")
 
             fetchers.fetch_name_from_taxon_id(user_email, each_taxon, retries)
 
-            log.info(" >>>> Name for '{}': '{}'".format(each_taxon.taxon_id, each_taxon.name))
+            log.info(
+                f" >>>> Name for '{each_taxon.taxon_id}': '{each_taxon.name}'")
 
-            fetchers.fetch_id_from_name(user_email, "genome", each_taxon, retries)
+            fetchers.fetch_id_from_name(
+                user_email, "genome", each_taxon, retries)
 
-            log.info(" >>>> Genome ID for '{}': '{}'".format(each_taxon.taxon_id,
-                                                             each_taxon.genome_id))
+            log.info(
+                f" >>>> Genome ID for '{each_taxon.taxon_id}': '{each_taxon.genome_id}'")
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user\n")
             sys.exit()
@@ -54,21 +56,26 @@ def retrieve_from_names(taxon_list, user_email, correction, retries):
     for each_taxon in taxon_list:
         try:
             if correction:
-                log.info("\n> Correcting organism name of '{}'".format(each_taxon.name))
+                log.info(
+                    f"\n> Correcting organism name of '{each_taxon.name}'")
 
-                fetchers.fetch_correct_spelling(user_email, each_taxon, retries)
+                fetchers.fetch_correct_spelling(
+                    user_email, each_taxon, retries)
 
-            log.info("\n> Searching Taxon ID and Genome ID of organism '{}'"
-                     .format(each_taxon.name))
+            log.info(
+                f"\n> Searching Taxon ID and Genome ID of organism '{each_taxon.name}'")
 
-            fetchers.fetch_id_from_name(user_email, "taxonomy", each_taxon, retries)
+            fetchers.fetch_id_from_name(
+                user_email, "taxonomy", each_taxon, retries)
 
-            log.info(" >>>> Taxon ID for '{}': '{}'".format(each_taxon.name, each_taxon.taxon_id))
+            log.info(
+                f" >>>> Taxon ID for '{each_taxon.name}': '{each_taxon.taxon_id}'")
 
-            fetchers.fetch_id_from_name(user_email, "genome", each_taxon, retries)
+            fetchers.fetch_id_from_name(
+                user_email, "genome", each_taxon, retries)
 
-            log.info(" >>>> Genome ID for '{}': '{}'".format(each_taxon.name,
-                                                             each_taxon.genome_id))
+            log.info(
+                f" >>>> Genome ID for '{each_taxon.name}': '{each_taxon.genome_id}'")
         except (KeyboardInterrupt):
             log.warning("\nQUIT: TaIGa was stopped by the user\n")
             sys.exit()
@@ -87,7 +94,8 @@ def retrieve_taxonomy(taxon_list, user_email, retries):
 
     """
 
-    log.info("\n> Gathering taxonomic information from NCBI Taxonomy. This might take a while...")
+    log.info(
+        "\n> Gathering taxonomic information from NCBI Taxonomy. This might take a while...")
 
     for each_taxon in taxon_list:
         if not (each_taxon.missing_name or each_taxon.missing_taxon_id):
@@ -97,10 +105,10 @@ def retrieve_taxonomy(taxon_list, user_email, retries):
                 log.warning("\nQUIT: TaIGa was stopped by the user\n")
                 sys.exit()
         elif each_taxon.missing_name:
-            log.warning("\nWARNING: Taxon {} is missing critical information. Skipping it..."
-                        .format(each_taxon.taxon_id))
+            log.warning(
+                f"\nWARNING: Taxon {each_taxon.taxon_id} is missing critical information. Skipping it...")
         elif each_taxon.missing_taxon_id:
-            log.warning("\nWARNING: Taxon {} is missing critical information. Skipping it..."
-                        .format(each_taxon.name))
+            log.warning(
+                f"\nWARNING: Taxon {each_taxon.name} is missing critical information. Skipping it...")
 
     log.info("\n> Done gathering taxonomic information")

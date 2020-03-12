@@ -52,7 +52,8 @@ def create_df(taxon_list):
                                     or taxon.missing_classification)]
 
     # Create a dataframe from the lists of classifications, names and ranks
-    frame = pd.DataFrame(taxon_classification, index=taxon_names, columns=final_ranks)
+    frame = pd.DataFrame(taxon_classification,
+                         index=taxon_names, columns=final_ranks)
 
     # Add the values for Taxon ID and Genome ID for each taxon
     for taxon in taxon_list:
@@ -91,36 +92,39 @@ def create_output(output_path, frame, taxon_list):
         try:
             os.makedirs(output_path)
         except (Exception):
-            log.error("\nERROR: Path to output folder may not be valid. Try again\n")
+            log.error(
+                "\nERROR: Path to output folder may not be valid. Try again\n")
             sys.exit()
 
-    log.info("\n> Creating output file. You'll find it inside the provided output folder")
+    log.info(
+        "\n> Creating output file. You'll find it inside the provided output folder")
 
     # Export the DataFrame to the resulting .csv file
     frame.to_csv(output_path + "TaIGa_result.csv")
 
-    log.info("\n> Creating a file for the organisms with missing information. It might be empty")
+    log.info(
+        "\n> Creating a file for the organisms with missing information. It might be empty")
 
     with open(output_path + "TaIGa_missing.txt", "w") as missing_file:
         missing_file.write("Missing corrected name: \n")
         for taxon in taxon_list:
             if taxon.missing_corrected:
-                missing_file.write("\t{}\n".format(taxon.name))
+                missing_file.write(f"\t{taxon.name}\n")
 
         missing_file.write("Missing Taxon ID: \n")
         for taxon in taxon_list:
             if taxon.missing_taxon_id:
-                missing_file.write("\t{}\n".format(taxon.name))
+                missing_file.write(f"\t{taxon.name}\n")
 
         missing_file.write("Missing name: \n")
         for taxon in taxon_list:
             if taxon.missing_name:
-                missing_file.write("\t{}\n".format(taxon.taxon_id))
+                missing_file.write(f"\t{taxon.taxon_id}\n")
 
         missing_file.write("Missing classification: \n")
         for taxon in taxon_list:
             if taxon.missing_classification:
                 if not taxon.missing_name:
-                    missing_file.write("\t{}\n".format(taxon.name))
+                    missing_file.write(f"\t{taxon.name}\n")
                 else:
-                    missing_file.write("\t{}\n".format(taxon.taxon_id))
+                    missing_file.write(f"\t{taxon.taxon_id}\n")

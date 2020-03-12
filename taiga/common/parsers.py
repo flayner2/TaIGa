@@ -35,7 +35,7 @@ def parse_txt(input_path, tid):
 
                     list_of_taxa.append(new_id)
 
-                    log.info("{} ---> All OK".format(new_id.taxon_id))
+                    log.info(f"{new_id.taxon_id} ---> All OK")
             else:
                 log.info("\n> Parsing input file a simple list of species names\n")
 
@@ -45,7 +45,7 @@ def parse_txt(input_path, tid):
 
                     list_of_taxa.append(new_taxon)
 
-                    log.info("{} ---> All OK".format(new_taxon.name))
+                    log.info(f"{new_taxon.name} ---> All OK")
     except (KeyboardInterrupt):
         log.warning("\nQUIT: TaIGa was stopped by the user\n")
         sys.exit()
@@ -79,25 +79,29 @@ def parse_gb(input_path, mode):
 
     try:
         if mode == 1:
-            log.info("\n> Parsing input as a Genbank file with multiple records and organisms")
+            log.info(
+                "\n> Parsing input as a Genbank file with multiple records and organisms")
 
             input_records = SeqIO.parse(input_path, "genbank")
 
             # Using set to uniquefy possible duplicate names or IDs from the input
-            list_of_taxa = set([Taxon(name=seq.annotations["organism"]) for seq in input_records])
+            list_of_taxa = set(
+                [Taxon(name=seq.annotations["organism"]) for seq in input_records])
         elif mode == 2:
             log.info("\n> Parsing input as a Genbank file with a single record")
             try:
                 input_records = SeqIO.read(input_path, "genbank")
 
-                list_of_taxa.append(Taxon(name=input_records.annotations["organism"]))
+                list_of_taxa.append(
+                    Taxon(name=input_records.annotations["organism"]))
             except (ValueError):
                 # Catch an error if there's more than one record in the input file.
                 log.error("\nERROR: The file contains more than one record. Try running TaIGa "
                           "again with a different Genbank file mode\n")
                 sys.exit()
         elif mode == 3:
-            log.info("\n> Parsing input as a Genbank file with multiple records for one organism")
+            log.info(
+                "\n> Parsing input as a Genbank file with multiple records for one organism")
 
             input_records = SeqIO.parse(input_path, "genbank")
 
@@ -117,7 +121,7 @@ def parse_gb(input_path, mode):
     if list_of_taxa:
         log.info("\n> All OK with parsing the input file. Checking the records...\n")
         for taxon in list_of_taxa:
-            log.info("> '{}' ---> All OK".format(taxon.name))
+            log.info(f"> '{taxon.name}' ---> All OK")
     else:
         log.error("\nERROR: Something went wrong while trying to parse the input file. Check the "
                   "file and the program execution commands and try again\n")
