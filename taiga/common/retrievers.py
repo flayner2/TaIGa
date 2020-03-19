@@ -1,6 +1,6 @@
 import sys
 import logging as log
-from taiga.common import fetchers
+from . import fetchers
 
 
 def retrieve_from_taxid(taxon_list, user_email, retries):

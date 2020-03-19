@@ -1,7 +1,7 @@
 import sys
 import argparse
 import logging as log
-from taiga.common import parsers, helpers, retrievers, data_handlers
+from ..common import parsers, helpers, retrievers, data_handlers
 
 
 def run_taiga():

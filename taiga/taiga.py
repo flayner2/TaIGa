@@ -4,8 +4,8 @@
 # Version: 2.0
 # License: MIT, check the LICENSE file in the root directory
 
-from taiga.common import helpers
-from taiga.core import taxonomy
+from .common import helpers
+from .core import taxonomy
 
 
 def run():

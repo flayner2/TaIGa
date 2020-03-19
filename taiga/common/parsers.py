@@ -1,7 +1,7 @@
 import sys
 import logging as log
 from Bio import SeqIO
-from taiga.common.data_models import Taxon
+from .data_models import Taxon
 
 
 def parse_txt(input_path, tid):
