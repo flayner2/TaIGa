@@ -2,9 +2,10 @@ import sys
 import logging as log
 from Bio import SeqIO
 from .data_models import Taxon
+from typing import List, Set
 
 
-def parse_txt(input_path, tid):
+def parse_txt(input_path: str, tid: bool) -> List:
     """Parses a file containing multiple strings and return a list of objects
 
     Parameters:
@@ -17,13 +18,13 @@ def parse_txt(input_path, tid):
 
     """
 
-    list_of_taxa = []
+    list_of_taxa: List = []
 
     try:
 
         with open(input_path, "r") as infile:
             # Using set to uniquefy possible duplicate names or IDs from the input
-            all_inputs = set(infile.readlines())
+            all_inputs: Set = set(infile.readlines())
 
             # Checks first if input file is an ids or names file
             if tid:
@@ -58,7 +59,7 @@ def parse_txt(input_path, tid):
     return list_of_taxa
 
 
-def parse_gb(input_path, mode):
+def parse_gb(input_path: str, mode: int) -> List:
     """Parses a Genbank format file containing sequence records and organism information
 
     Parameters:
@@ -70,12 +71,12 @@ def parse_gb(input_path, mode):
                 3: Genbank file with multiple records from the same organism
 
     Returns:
-    list_of_taxa: A list of Taxon objects, each containing a self.name value for each record
+    list_of_taxa (list): A list of Taxon objects, each containing a self.name value for each record
                   in the input file
 
     """
 
-    list_of_taxa = []
+    list_of_taxa: List = []
 
     try:
         if mode == 1:
@@ -84,9 +85,9 @@ def parse_gb(input_path, mode):
 
             input_records = SeqIO.parse(input_path, "genbank")
 
-            # Using set to uniquefy possible duplicate names or IDs from the input
-            list_of_taxa = set(
-                [Taxon(name=seq.annotations["organism"]) for seq in input_records])
+            # Using a set to uniquefy possible duplicate names or IDs from the input
+            list_of_taxa = list(
+                {Taxon(name=seq.annotations["organism"]) for seq in input_records})
         elif mode == 2:
             log.info("\n> Parsing input as a Genbank file with a single record")
             try:

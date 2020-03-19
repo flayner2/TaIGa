@@ -2,9 +2,10 @@ import sys
 import logging as log
 from Bio import Entrez
 from urllib.error import HTTPError
+from .data_models import Taxon
 
 
-def fetch_taxonomic_info(user_email, taxon, retries):
+def fetch_taxonomic_info(user_email: str, taxon: Taxon, retries: int) -> None:
     """Receives a Taxon object and tries to fetch its full taxonomic classification information
 
     Parameters:
@@ -59,7 +60,7 @@ def fetch_taxonomic_info(user_email, taxon, retries):
         taxon.missing_classification = True
 
 
-def fetch_correct_spelling(user_email, taxon, retries):
+def fetch_correct_spelling(user_email: str, taxon: Taxon, retries: int) -> None:
     """Receives a Taxon object and tries to fetch a correct name for it from NCBI
 
     Parameters:
@@ -101,7 +102,7 @@ def fetch_correct_spelling(user_email, taxon, retries):
         taxon.missing_corrected = True
 
 
-def fetch_id_from_name(user_email, db, taxon, retries):
+def fetch_id_from_name(user_email: str, db: str, taxon: Taxon, retries: int) -> None:
     """Fetches either the Taxon ID or the Genome ID for a Taxon object, using the taxon's name
 
     Parameters:
@@ -162,7 +163,7 @@ def fetch_id_from_name(user_email, db, taxon, retries):
             f"\nWARNING: Taxon {taxon.taxon_id} is missing a name. Not searching for Taxon or Genome ID")
 
 
-def fetch_name_from_taxon_id(user_email, taxon, retries):
+def fetch_name_from_taxon_id(user_email: str, taxon: Taxon, retries: int) -> None:
     """Receives a Taxon object and tries to fetch a name for it from its Taxon ID
 
     Parameters:

@@ -2,7 +2,7 @@ import sys
 import logging as log
 
 
-def sanitize_version():
+def sanitize_version() -> None:
     """Checks the Python version used to execute TaIGa and exits if it is less than 3.6.x
 
     Parameters:
@@ -18,7 +18,7 @@ def sanitize_version():
                  "with 'python3 TaIGa.py' or 'python3.6 TaIGa.py'")
 
 
-def config_log(verbose):
+def config_log(verbose: bool) -> None:
     """Sets the global configuration for the output mode of the 'logging' module
 
     Parameters:
@@ -30,6 +30,7 @@ def config_log(verbose):
     """
 
     if verbose:
-        log.basicConfig(filename="TaIGa_run.log", format="%(message)s", level=log.DEBUG)
+        log.basicConfig(filename="TaIGa_run.log",
+                        format="%(message)s", level=log.DEBUG)
     else:
         log.basicConfig(format="%(message)s", level=log.DEBUG)

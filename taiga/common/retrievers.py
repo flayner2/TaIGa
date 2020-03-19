@@ -1,9 +1,10 @@
 import sys
 import logging as log
 from . import fetchers
+from typing import List
 
 
-def retrieve_from_taxid(taxon_list, user_email, retries):
+def retrieve_from_taxid(taxon_list: List, user_email: str, retries: int) -> None:
     """Wrapper for the functions that get the name and Genome ID for each taxon from their Taxon ID.
     It writes the fetched information directly in the Taxon objects provided
 
@@ -37,7 +38,7 @@ def retrieve_from_taxid(taxon_list, user_email, retries):
             sys.exit()
 
 
-def retrieve_from_names(taxon_list, user_email, correction, retries):
+def retrieve_from_names(taxon_list: List, user_email: str, correction: bool, retries: int) -> None:
     """Wrapper for the functions that get the Taxon ID and Genome ID for each taxon from their name.
     It writes the fetched information directly in the Taxon objects provided
 
@@ -81,7 +82,7 @@ def retrieve_from_names(taxon_list, user_email, correction, retries):
             sys.exit()
 
 
-def retrieve_taxonomy(taxon_list, user_email, retries):
+def retrieve_taxonomy(taxon_list: List, user_email: str, retries: int) -> None:
     """Wrapper for the function that fetches a taxon's taxonomic classification information
 
     Parameters:

@@ -1,8 +1,13 @@
-# A Taxon holds all the information parsed an fetched by TaIGa for one organism
+"""
+A Taxon holds all the information parsed an fetched by TaIGa for one organism
+"""
+from typing import Dict, List, Set
+
+
 class Taxon:
-    def __init__(self, name=None, genome_id=None, taxon_id=None, classification=dict(),
-                 missing_name=False, missing_taxon_id=False, missing_corrected=False,
-                 missing_classification=False):
+    def __init__(self, name: str = None, genome_id: int = None, taxon_id: int = None, classification: Dict = dict(),
+                 missing_name: bool = False, missing_taxon_id: bool = False, missing_corrected: bool = False,
+                 missing_classification: bool = False) -> None:
         self.name = name
         self.genome_id = genome_id
         self.taxon_id = taxon_id
@@ -12,7 +17,7 @@ class Taxon:
         self.missing_corrected = missing_corrected
         self.missing_classification = missing_classification
 
-    def list_taxa(self):
+    def list_taxa(self) -> List:
         """Returns a list of all the names of the taxon ranks for an organism
 
         Parameters:
@@ -25,7 +30,7 @@ class Taxon:
 
         return list(self.classification.values())
 
-    def list_ranks(self):
+    def list_ranks(self) -> Set:
         """Returns a set with all the ranks for an organism
 
         Parameters:

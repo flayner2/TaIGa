@@ -8,7 +8,7 @@ from .common import helpers
 from .core import taxonomy
 
 
-def run():
+def run() -> None:
     """Wrapper for the main execution of the program, performs a python version checking first
 
     Parameters:

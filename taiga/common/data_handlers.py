@@ -2,9 +2,10 @@ import pandas as pd
 import logging as log
 import sys
 import os
+from typing import List, Set
 
 
-def create_df(taxon_list):
+def create_df(taxon_list: List) -> pd.DataFrame:
     """Creates a Pandas DataFrame with the information for each input taxon
 
     Parameters:
@@ -20,7 +21,7 @@ def create_df(taxon_list):
     log.info("\n> Generating result DataFrame")
 
     # Headers set, will store all possible ranks from the input taxa
-    raw_ranks = set()
+    raw_ranks: Set = set()
 
     # The header set is a combination of the rank sets from all taxa
     for taxon in taxon_list:
@@ -28,7 +29,7 @@ def create_df(taxon_list):
             raw_ranks |= taxon.list_ranks()
 
     # To preserve the order, a list with all possible ranks from NCBI taxonomy is constructed
-    ordered_ranks = [
+    ordered_ranks: List = [
         "no rank", "superkingdom", "kingdom", "subkingdom", "phylum", "subphylum",
         "superclass", "class", "subclass", "infraclass", "cohort", "subcohort",
         "superorder", "order", "suborder", "infraorder", "parvorder", "superfamily",
@@ -37,23 +38,23 @@ def create_df(taxon_list):
     ]
 
     # To assure only ranks existing in the input taxa are part of the header, filter the list
-    final_ranks = [rank for rank in ordered_ranks if rank in raw_ranks]
+    final_ranks: List = [rank for rank in ordered_ranks if rank in raw_ranks]
 
     # Add final header variables
     final_ranks.insert(0, "genome_id")
     final_ranks.insert(0, "taxon_id")
 
     # Create lists from the names and classifications of each taxon, in order
-    taxon_names = [taxon.name for taxon in taxon_list if not (taxon.missing_name or
-                                                              taxon.missing_taxon_id or
-                                                              taxon.missing_classification)]
-    taxon_classification = [taxon.classification for taxon in taxon_list
-                            if not (taxon.missing_name or taxon.missing_taxon_id
-                                    or taxon.missing_classification)]
+    taxon_names: List = [taxon.name for taxon in taxon_list if not (taxon.missing_name or
+                                                                    taxon.missing_taxon_id or
+                                                                    taxon.missing_classification)]
+    taxon_classification: List = [taxon.classification for taxon in taxon_list
+                                  if not (taxon.missing_name or taxon.missing_taxon_id
+                                          or taxon.missing_classification)]
 
     # Create a dataframe from the lists of classifications, names and ranks
-    frame = pd.DataFrame(taxon_classification,
-                         index=taxon_names, columns=final_ranks)
+    frame: pd.DataFrame = pd.DataFrame(taxon_classification,
+                                       index=taxon_names, columns=final_ranks)
 
     # Add the values for Taxon ID and Genome ID for each taxon
     for taxon in taxon_list:
@@ -72,7 +73,7 @@ def create_df(taxon_list):
     return frame
 
 
-def create_output(output_path, frame, taxon_list):
+def create_output(output_path: str, frame: pd.DataFrame, taxon_list: List) -> None:
     """Creates the output directories (if they don't exist) and files for TaIGa
 
     Parameters:
