@@ -3,7 +3,6 @@ import argparse
 import logging as log
 from ..common import parsers, helpers, retrievers, data_handlers
 
-
 def run_taiga():
     """ Wrapper for all of TaIGa's main functionalities
 

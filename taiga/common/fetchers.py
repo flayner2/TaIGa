@@ -22,8 +22,8 @@ def fetch_taxonomic_info(user_email: str, taxon: Taxon, retries: int) -> None:
     Entrez.email = user_email
     Entrez.max_tries = retries
     Entrez.sleep_between_tries = 15
-    # To avoid bugs, this has to be initialized as an empty dict
-    taxon.classification = dict()
+
+    taxon.classification = {}
 
     try:
         query = Entrez.efetch(db="taxonomy", id=taxon.taxon_id, retmode="xml")

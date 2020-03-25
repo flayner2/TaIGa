@@ -5,7 +5,7 @@ from .data_models import Taxon
 from typing import List, Set
 
 
-def parse_txt(input_path: str, tid: bool) -> List:
+def parse_txt(input_path: str, tid: bool) -> List[Taxon]:
     """Parses a file containing multiple strings and return a list of objects
 
     Parameters:
@@ -18,7 +18,7 @@ def parse_txt(input_path: str, tid: bool) -> List:
 
     """
 
-    list_of_taxa: List = []
+    list_of_taxa: List[Taxon] = []
 
     try:
 
@@ -59,7 +59,7 @@ def parse_txt(input_path: str, tid: bool) -> List:
     return list_of_taxa
 
 
-def parse_gb(input_path: str, mode: int) -> List:
+def parse_gb(input_path: str, mode: int) -> List[Taxon]:
     """Parses a Genbank format file containing sequence records and organism information
 
     Parameters:
@@ -75,8 +75,8 @@ def parse_gb(input_path: str, mode: int) -> List:
                   in the input file
 
     """
-
-    list_of_taxa: List = []
+    
+    list_of_taxa: List[Taxon] = []
 
     try:
         if mode == 1:
