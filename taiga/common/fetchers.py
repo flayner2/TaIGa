@@ -128,6 +128,19 @@ def fetch_id_from_name(user_email: str, db: str, taxon: Taxon, retries: int) -> 
         parsed = Entrez.read(query)
 
         if db == "taxonomy":
+            if not (parsed['IdList']):
+                # If the query returned a bad reponse because of unrecognized patterns (eg. places, ids)
+                # We then only consider the first two terms of the name for a new search
+                split_name = taxon.name.split()
+
+                if ('sp.' in split_name) or ('spp.' in split_name):
+                    temp_term = split_name[0]
+                else:
+                    temp_term = f'{split_name[0]} {split_name[1]}'
+
+                query = Entrez.esearch(db=db, term=temp_term, retmode="xml")
+                parsed = Entrez.read(query)
+
             try:
                 taxon_id = parsed["IdList"][0]
                 taxon.taxon_id = int(taxon_id)
@@ -143,6 +156,19 @@ def fetch_id_from_name(user_email: str, db: str, taxon: Taxon, retries: int) -> 
                             f"ID for organism '{taxon.name}'")
                 taxon.missing_taxon_id = True
         elif db == "genome":
+            if not (parsed['IdList']):
+                # If the query returned a bad reponse because of unrecognized patterns (eg. places, ids)
+                # We then only consider the first two terms of the name for a new search
+                split_name = taxon.name.split()
+
+                if ('sp.' in split_name) or ('spp.' in split_name):
+                    temp_term = split_name[0]
+                else:
+                    temp_term = f'{split_name[0]} {split_name[1]}'
+
+                query = Entrez.esearch(db=db, term=temp_term, retmode="xml")
+                parsed = Entrez.read(query)
+                
             try:
                 genome_id = parsed["IdList"][-1]
                 taxon.genome_id = int(genome_id)
