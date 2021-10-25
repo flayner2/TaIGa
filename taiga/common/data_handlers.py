@@ -3,7 +3,7 @@ import logging as log
 import sys
 import os
 from typing import List, Set
-from data_models import Taxon
+from .data_models import Taxon
 
 
 def create_df(taxon_list: List[Taxon]) -> pd.DataFrame:

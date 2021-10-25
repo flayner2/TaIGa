@@ -2,7 +2,7 @@ import sys
 import logging as log
 from Bio import Entrez
 from urllib.error import HTTPError
-from data_models import Taxon
+from .data_models import Taxon
 
 
 def fetch_taxonomic_info(user_email: str, taxon: Taxon, retries: int) -> None:

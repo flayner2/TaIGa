@@ -1,7 +1,7 @@
 import sys
 import logging as log
 from Bio import SeqIO
-from data_models import Taxon
+from .data_models import Taxon
 from typing import List, Set
 
 
