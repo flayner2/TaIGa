@@ -7,7 +7,7 @@ import helpers
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from taiga.common import parsers
-from taiga.common.data_models import Taxon
+from taiga.common.taxon import Taxon
 
 
 def test_parse_names_text_file():
