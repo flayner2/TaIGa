@@ -4,8 +4,8 @@
 # Version: 2.0
 # License: MIT, check the LICENSE file in the root directory
 
-from .common import helpers
-from .core import taxonomy
+import helpers
+import taxonomy
 
 
 def run() -> None:
@@ -21,3 +21,7 @@ def run() -> None:
 
     helpers.sanitize_version()
     taxonomy.run_taiga()
+
+
+if __name__ == "__main__":
+    run()

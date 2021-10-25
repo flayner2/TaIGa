@@ -1,10 +1,14 @@
 import sys
 import argparse
 import logging as log
-from ..common import parsers, helpers, retrievers, data_handlers
+import parsers
+import helpers
+import retrievers
+import data_handlers
+
 
 def run_taiga():
-    """ Wrapper for all of TaIGa's main functionalities
+    """Wrapper for all of TaIGa's main functionalities
 
     Parameters:
     None
@@ -16,19 +20,23 @@ def run_taiga():
 
     taiga = argparse.ArgumentParser(
         description="TaIGa retrieves metadata of an organism (or a collection of organisms) from a "
-        "list of names, Taxon IDs or a Genbank format genome file")
+        "list of names, Taxon IDs or a Genbank format genome file"
+    )
 
     taiga.add_argument(
         "infile",
-        help="Full path to input file (or only the file name if it is on the same folder)")
+        help="Full path to input file (or only the file name if it is on the same folder)",
+    )
     taiga.add_argument(
         "outdir",
         help="Full path to output folder (folder doensn't need to be pre-existent. TaIGa will "
-        "create the output files automatically)")
+        "create the output files automatically)",
+    )
     taiga.add_argument(
         "email",
         help="Any valid email of yours. It is a common practice when using E-utils, which TaIGa "
-        "does use")
+        "does use",
+    )
     taiga.add_argument(
         "--gb-mode",
         help="Change the expected Genbank file format input. Only use if your input file is in "
@@ -37,26 +45,35 @@ def run_taiga():
         nargs=1,
         default=0,
         choices=[0, 1, 2, 3],
-        dest='mode'
+        dest="mode",
     )
     taiga.add_argument(
-        "--tid", help="Use this option if you want to run TaIGa from a text file with a list of "
-        "valid Taxonomy Taxon IDs", action="store_true")
+        "--tid",
+        help="Use this option if you want to run TaIGa from a text file with a list of "
+        "valid Taxonomy Taxon IDs",
+        action="store_true",
+    )
     taiga.add_argument(
         "-c",
         help="Use this to enable TaIGa's name correcting function. Beware: sometimes, this "
         "function will alter organism names unecessarily and thus result in missing information "
         "returned (which could be misleading)",
-        action="store_true")
+        action="store_true",
+    )
     taiga.add_argument(
         "-t",
         help="Set the maximum ammount of retries for TaIGa's requests. By default, this number is "
-        "5", nargs=1, default=5, type=int)
+        "5",
+        nargs=1,
+        default=5,
+        type=int,
+    )
     taiga.add_argument(
         "-v",
         help="Turn off TaIGa's standard verbose mode. This way, all prints that would usually go "
         "to stdout will be logged to a file on TaIGa's current working directory",
-        action="store_true")
+        action="store_true",
+    )
 
     args = taiga.parse_args()
 
@@ -84,7 +101,7 @@ def run_taiga():
         mode = args.mode
     else:
         mode = args.mode[-1]
-    
+
     # A list to hold Taxon objects
     taxon_list = []
 
@@ -92,19 +109,23 @@ def run_taiga():
     # At this point, the output may be set to verbose or not
     helpers.config_log(verbose)
 
-    log.info("""
+    log.info(
+        """
     *********************************************
     *                                           *
     *   TaIGa - Taxonomy Information Gatherer   *
     *                                           *
-    *********************************************""")
+    *********************************************"""
+    )
 
     # Checking if TaIGa is being run on Taxon ID mode with the '-c' argument
     # This is needed because, when run with '--tid', TaIGa never actually tries to correct spelling
     # as the retrieved name is assumed to be correct
     if tid and correction:
-        log.error("\nERROR: Please, when running TaIGa with the '--tid' option, don't use the '-c' "
-                  "option as TaIGa already skips the name correction\n")
+        log.error(
+            "\nERROR: Please, when running TaIGa with the '--tid' option, don't use the '-c' "
+            "option as TaIGa already skips the name correction\n"
+        )
         sys.exit()
 
     # Check if input mode is for a Genbank format file or a text file and then parse the input
@@ -129,4 +150,6 @@ def run_taiga():
     # Calling the last function which takes the DataFrame and creates the output files
     data_handlers.create_output(output_path, frame, taxon_list)
 
-    log.info("\n> TaIGa was run successfully! You can check the results inside the output folder\n")
+    log.info(
+        "\n> TaIGa was run successfully! You can check the results inside the output folder\n"
+    )
