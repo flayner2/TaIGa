@@ -33,4 +33,5 @@ def test_parse_names_text_file():
 
 
 if __name__ == "__main__":
+    # Debugging
     test_parse_names_text_file()
