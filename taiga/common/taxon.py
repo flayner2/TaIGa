@@ -99,7 +99,7 @@ class Taxon:
 
     ###########################################################
 
-    # Getters and setters
+    # Getters and setters - only for compound data likes dicts and lists
 
     def get_taxon_names_list(self) -> List:
         """
