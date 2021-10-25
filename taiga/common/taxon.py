@@ -1,13 +1,31 @@
-"""
-A Taxon holds all the information parsed an fetched by TaIGa for one organism
-"""
 from typing import Dict, List, Set
 
 
 class Taxon:
-    def __init__(self, name: str = None, genome_id: int = None, taxon_id: int = None, classification: Dict = None,
-                 missing_name: bool = False, missing_taxon_id: bool = False, missing_corrected: bool = False,
-                 missing_classification: bool = False) -> None:
+    """
+    A Taxon is a representation of the taxonomic information of an organism.
+    """
+
+    name: str
+    genome_id: int
+    taxon_id: int
+    classification: Dict  # This may become a `defaultdict`
+    missing_name: bool
+    missing_taxon_id: bool
+    missing_corrected: bool
+    missing_classification: bool
+
+    def __init__(
+        self,
+        name: str = "",
+        genome_id: int = 0,
+        taxon_id: int = 0,
+        classification: Dict = {},
+        missing_name: bool = False,
+        missing_taxon_id: bool = False,
+        missing_corrected: bool = False,
+        missing_classification: bool = False,
+    ) -> None:
         self.name = name
         self.genome_id = genome_id
         self.taxon_id = taxon_id
@@ -27,7 +45,7 @@ class Taxon:
         (list): A list of all the values from the 'self.classification' dict
 
         """
-        
+
         if self.classification is not None:
             return list(self.classification.values())
         else:
