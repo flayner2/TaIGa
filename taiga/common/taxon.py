@@ -89,6 +89,14 @@ class Taxon:
 
         return False
 
+    def __str__(self) -> str:
+        return (
+            f"Name: {self.name}\n"
+            f"TaxonID: {self.taxon_id if self.has_taxon_id() else 'N/A'}\n"
+            f"GenomeID: {self.genome_id if self.has_genome_id() else 'N/A'}\n"
+            f"Classification: {self.get_taxon_names_list()}"
+        )
+
     ###########################################################
 
     # Getters and setters
