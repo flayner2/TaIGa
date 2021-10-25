@@ -1,0 +1,168 @@
+LOCUS       MK529976                 193 bp    DNA     linear   INV 15-FEB-2020
+DEFINITION  Bombus impatiens isolate LPF067, Metasomal contents of adult small
+            subunit ribosomal RNA gene, partial sequence.
+ACCESSION   MK529976
+VERSION     MK529976.1
+KEYWORDS    .
+SOURCE      Bombus impatiens (common eastern bumble bee)
+  ORGANISM  Bombus impatiens
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
+            Pterygota; Neoptera; Holometabola; Hymenoptera; Apocrita; Aculeata;
+            Apoidea; Apidae; Bombus; Pyrobombus.
+REFERENCE   1  (bases 1 to 193)
+  AUTHORS   Tripodi,A.D., Mullins,J.L. and Strange,J.P.
+  TITLE     Why don't queens get broody? Parasites, mating status, and ovary
+            development in Bombus huntii and Bombus vosnesenskii
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 193)
+  AUTHORS   Tripodi,A.D., Mullins,J.L. and Strange,J.P.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (15-FEB-2019) Pollinating Insect Research Unit, USDA-ARS,
+            1410 North 800 E, Logan, UT 84341, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..193
+                     /organism="Bombus impatiens"
+                     /mol_type="genomic DNA"
+                     /isolate="LPF067, Metasomal contents of adult"
+                     /db_xref="taxon:132113"
+                     /country="USA: Highlands Co., FL"
+                     /collection_date="22-Jun-2015"
+                     /PCR_primers="fwd_name: Apid18SF, fwd_seq:
+                     gtcctatcggtgggcttagc, rev_name: Apid18SR, rev_seq:
+                     atgcccccatctgtccctat"
+     rRNA            <1..>193
+                     /product="small subunit ribosomal RNA"
+ORIGIN      
+        1 tcctcgcggg cggtccaact aatatcccat cgcggtgctc ttcactgagt gtcgaggtgg
+       61 gccgatacgt ttactttgaa caaattagag tgcttaaagc aggctacctt cgcctgaata
+      121 ctgtgtgcat ggaataatgg aataggacct cggttctatt ttgttggttt tcggagcccc
+      181 gaggtaatga tta
+//
+
+LOCUS       NM_001378412            1220 bp    mRNA    linear   ROD 16-FEB-2020
+DEFINITION  Mus musculus predicted gene, 21394 (Gm21394), mRNA.
+ACCESSION   NM_001378412
+VERSION     NM_001378412.1
+KEYWORDS    RefSeq.
+SOURCE      Mus musculus (house mouse)
+  ORGANISM  Mus musculus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+            Muroidea; Muridae; Murinae; Mus; Mus.
+REFERENCE   1  (bases 1 to 1220)
+  AUTHORS   Gaudet P, Livstone MS, Lewis SE and Thomas PD.
+  TITLE     Phylogenetic-based propagation of functional annotations within the
+            Gene Ontology consortium
+  JOURNAL   Brief. Bioinformatics 12 (5), 449-462 (2011)
+   PUBMED   21873635
+COMMENT     PROVISIONAL REFSEQ: This record has not yet been subject to final
+            NCBI review. The reference sequence was derived from BC100414.1.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: SRR5189685.88371.1 [ECO:0000332]
+            ##Evidence-Data-END##
+PRIMARY     REFSEQ_SPAN         PRIMARY_IDENTIFIER PRIMARY_SPAN        COMP
+            1-1220              BC100414.1         1-1220
+FEATURES             Location/Qualifiers
+     source          1..1220
+                     /organism="Mus musculus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:10090"
+                     /chromosome="Y"
+                     /map="Y"
+     gene            1..1220
+                     /gene="Gm21394"
+                     /note="predicted gene, 21394"
+                     /db_xref="GeneID:108168579"
+                     /db_xref="MGI:MGI:5434749"
+     exon            1..119
+                     /gene="Gm21394"
+                     /inference="alignment:Splign:2.1.0"
+     exon            120..1220
+                     /gene="Gm21394"
+                     /inference="alignment:Splign:2.1.0"
+     misc_feature    371..373
+                     /gene="Gm21394"
+                     /note="upstream in-frame stop codon"
+     CDS             401..1084
+                     /gene="Gm21394"
+                     /note="Y-linked testis-specific protein 1-like;
+                     spermiogenesis specific transcript on the Y 2-like"
+                     /codon_start=1
+                     /product="predicted gene, 21394"
+                     /protein_id="NP_001365341.1"
+                     /db_xref="GeneID:108168579"
+                     /db_xref="MGI:MGI:5434749"
+                     /translation="MTSLKKKSRRKPSSQALGNIVGCRISHGWKEGNEPVTHWKAIIL
+                     GQLPTNPSLYLVKYDGIDSVYGQELHSDERILNLKVLPHKVVFPQVRDVHLAGALVGR
+                     EVQHKFEGKDGSEDNWSGMVLAQVPFLQDYLYISYKKDPVLYVYQLLDDYKEGNLHII
+                     PETPLAGARSGDDNDFLIGSWVQYTRDDGSKKFGKVVYKVLANPTVYFIKFLGDLHIY
+                     VYTLVSNIT"
+ORIGIN      
+        1 attcaaggtg agttcactat cttcacagtg gtgtgtcaaa gccaggtcat tttttcccac
+       61 aggcttttgg tgcctggtct gtatcaggag atcttgacga ctaggatatt tttctatggg
+      121 agctcaaaac tgtttagcat aatcttcttc acctgctcag aagttctctt agagaagagt
+      181 cttggtccag cattcactcc caacccataa tcattgccca tcaggaattc atatatatga
+      241 cagaggcaac agcattgtgt ctggcgtaaa cgggcaagat cttcagtccc aggcaatgag
+      301 caagtatgat atttgaaggg aatggaagcc acaagacagt gtgatctacc acaacaggtc
+      361 tacagccagg tagaagacaa tacatctgaa gagtctgagc atgacatcac tcaagaagaa
+      421 gagtaggagg aagccttctt cccaggccct ggggaatatt gttggctgca gaatttctca
+      481 cgggtggaag gaaggtaatg agcctgtcac ccattggaag gccatcattc taggtcaact
+      541 gccaacaaac ccttctcttt atttggtgaa gtatgacgga attgacagtg tctacggaca
+      601 ggagctccac agcgatgaga ggattttaaa tcttaaggtc ttgcctcaca aagtagtttt
+      661 tcctcaggtg agggatgtcc acctcgcagg cgcactggtt ggcagagagg tacaacacaa
+      721 atttgagggg aaagatggct ctgaggacaa ctggagtggg atggtgctag cccaggtgcc
+      781 attcttacag gactatttgt acatttccta caagaaggat ccggtcctct acgtctatca
+      841 gctcctggat gactacaagg aaggtaacct ccacatcatt ccagagaccc ctctggctgg
+      901 ggcgagatca ggtgatgaca atgacttctt aataggttcc tgggtgcagt acaccagaga
+      961 tgatggatcc aaaaagttcg gaaaggttgt ttacaaagtt ctagccaatc ctactgtgta
+     1021 ctttatcaaa tttctcggtg acctccatat ctatgtctat actctagtgt caaatatcac
+     1081 ttaaattgaa aaaaatcaca aagtacagaa atgtaaactt ataggattga aaaaaaatgt
+     1141 ttgttttcct gtgttgggta cctatgggtc tttgacaacc tcagtatctt tgtcaataaa
+     1201 atttgttttg ttctaaaaat
+//
+
+LOCUS       MT048507                 155 bp    DNA     linear   MAM 17-FEB-2020
+DEFINITION  Bos taurus isolate N141_L1085 small subunit ribosomal RNA gene,
+            partial sequence; mitochondrial.
+ACCESSION   MT048507
+VERSION     MT048507.1
+KEYWORDS    .
+SOURCE      mitochondrion Bos taurus (cattle)
+  ORGANISM  Bos taurus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Artiodactyla; Ruminantia;
+            Pecora; Bovidae; Bovinae; Bos.
+REFERENCE   1  (bases 1 to 155)
+  AUTHORS   Teheran,A.A., Gutierrez,R., Martinez,R.A., Morales,D., Hoyos,R. and
+            Araque,A.
+  TITLE     Complex ecological interactions across a focus of cutaneous
+            leishmaniasis in eastern Colombia: Novel description of Leishmania
+            species, hosts, and phlebotomine fauna
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 155)
+  AUTHORS   Hernandez,C., Sandoval,C. and Ramirez,J.D.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (12-FEB-2020) Microbiology, Universidad del Rosario,
+            Carrera 24 No. 63C-69, Bogota, Bogota 111221, Colombia
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..155
+                     /organism="Bos taurus"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /isolate="N141_L1085"
+                     /db_xref="taxon:9913"
+     rRNA            <1..>155
+                     /product="small subunit ribosomal RNA"
+ORIGIN      
+        1 tattcgccag agtactacta gcaacagctt aaaactcaaa ggacttggcg gtgctttata
+       61 tccttctaga ggagcctgtt ctataatcga taaaccccga taaacctcac caattcttgc
+      121 taatacagtc tatataccgc catcttcagc aaaca
+//
+

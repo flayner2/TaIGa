@@ -1,0 +1,147 @@
+LOCUS       MN347010                 260 bp    DNA     linear   INV 16-FEB-2020
+DEFINITION  Apis mellifera isolate Zan NADH dehydrogenase subunit 4L (ND4L)
+            gene, partial cds; mitochondrial.
+ACCESSION   MN347010
+VERSION     MN347010.1
+KEYWORDS    .
+SOURCE      mitochondrion Apis mellifera (honey bee)
+  ORGANISM  Apis mellifera
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
+            Pterygota; Neoptera; Holometabola; Hymenoptera; Apocrita; Aculeata;
+            Apoidea; Apidae; Apis.
+REFERENCE   1  (bases 1 to 260)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Genetic diversity of populations of Apis mellifera meda based on
+            mitochondrial ND4, ND4L and ND6
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 260)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (21-AUG-2019) Plant Protection, University of Kurdistan,
+            Pasdaran, Sanandaj, Kurdistan, Iran
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..260
+                     /organism="Apis mellifera"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /isolate="Zan"
+                     /db_xref="taxon:7460"
+     gene            <1..>260
+                     /gene="ND4L"
+     CDS             <1..>260
+                     /gene="ND4L"
+                     /codon_start=1
+                     /transl_table=5
+                     /product="NADH dehydrogenase subunit 4L"
+                     /protein_id="QHZ15482.1"
+                     /translation="NKSNLQLLIFDDQVHNLFLLMMMNLKLTHMQKMLKKLKMTIYXF
+                     HIQXXKMKQXLLKILLKLKNLKNLHYNTMKMXKMMMLLQMMI"
+ORIGIN      
+        1 aataaatcaa atctacaact cttaattttt gatgaccaag ttcataattt attcttacta
+       61 ataatgataa acctaaaact aactcacata cagaaaatac taaaaaaatt aaaaataacc
+      121 atctatwaat ttcatatcca awaawaaaaa ataaaacagw aattactaaa aattctatta
+      181 aaattaaaaa acttaaaaaa tttacattat aataccataa aaatawaaaa aataataata
+      241 ttattacaaa taataattta
+//
+
+LOCUS       MN347009                 260 bp    DNA     linear   INV 16-FEB-2020
+DEFINITION  Apis mellifera isolate WesternAzar NADH dehydrogenase subunit 4L
+            (ND4L) gene, partial cds; mitochondrial.
+ACCESSION   MN347009
+VERSION     MN347009.1
+KEYWORDS    .
+SOURCE      mitochondrion Apis mellifera (honey bee)
+  ORGANISM  Apis mellifera
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
+            Pterygota; Neoptera; Holometabola; Hymenoptera; Apocrita; Aculeata;
+            Apoidea; Apidae; Apis.
+REFERENCE   1  (bases 1 to 260)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Genetic diversity of populations of Apis mellifera meda based on
+            mitochondrial ND4, ND4L and ND6
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 260)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (21-AUG-2019) Plant Protection, University of Kurdistan,
+            Pasdaran, Sanandaj, Kurdistan, Iran
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..260
+                     /organism="Apis mellifera"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /isolate="WesternAzar"
+                     /db_xref="taxon:7460"
+     gene            <1..>260
+                     /gene="ND4L"
+     CDS             <1..>260
+                     /gene="ND4L"
+                     /codon_start=1
+                     /transl_table=5
+                     /product="NADH dehydrogenase subunit 4L"
+                     /protein_id="QHZ15481.1"
+                     /translation="NKSNLQLLIFDDQVHNLFLLMMMNLKLTHMQKMLKKLKMTIYXF
+                     HIQXXKMKQXLLKILLKLKNLKNLHYNTMKMXKMMMLLQMMI"
+ORIGIN      
+        1 aataaatcaa atctacaact cttaattttt gatgaccaag ttcataattt attcttacta
+       61 ataatgataa acctaaaact aactcacata cagaaaatac taaaaaaatt aaaaataacc
+      121 atctatwaat ttcatatcca awaawaaaaa ataaaacagw aattactaaa aattctatta
+      181 aaattaaaaa acttaaaaaa tttacattat aataccataa aaatawaaaa aataataata
+      241 ttattacaaa taataattta
+//
+
+LOCUS       MN347008                 264 bp    DNA     linear   INV 16-FEB-2020
+DEFINITION  Apis mellifera isolate Teh NADH dehydrogenase subunit 4L (ND4L)
+            gene, partial cds; mitochondrial.
+ACCESSION   MN347008
+VERSION     MN347008.1
+KEYWORDS    .
+SOURCE      mitochondrion Apis mellifera (honey bee)
+  ORGANISM  Apis mellifera
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
+            Pterygota; Neoptera; Holometabola; Hymenoptera; Apocrita; Aculeata;
+            Apoidea; Apidae; Apis.
+REFERENCE   1  (bases 1 to 264)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Genetic diversity of populations of Apis mellifera meda based on
+            mitochondrial ND4, ND4L and ND6
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 264)
+  AUTHORS   Veisi,H. and Nazemi Rafie,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (21-AUG-2019) Plant Protection, University of Kurdistan,
+            Pasdaran, Sanandaj, Kurdistan, Iran
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..264
+                     /organism="Apis mellifera"
+                     /organelle="mitochondrion"
+                     /mol_type="genomic DNA"
+                     /isolate="Teh"
+                     /db_xref="taxon:7460"
+     gene            <1..>264
+                     /gene="ND4L"
+     CDS             <1..>264
+                     /gene="ND4L"
+                     /codon_start=1
+                     /transl_table=5
+                     /product="NADH dehydrogenase subunit 4L"
+                     /protein_id="QHZ15480.1"
+                     /translation="LMNQIYNSXFLMTKFMIYSYXXWXTXNXLTYSKYXKNXKXPSIN
+                     FMSNNKKXNSNYXKFYXNXKTXKIYIMMPXKYKKXXYYYKXXFN"
+ORIGIN      
+        1 ttaataaatc aaatctataa ctcttawttt ttgatgacca agttcataat ttattcttac
+       61 tawtawtgat awacctawaa ctawctcaca tacagaaaat actawaaaaa ttawaaataw
+      121 ccatctatta atttcatatc caataataaa aaatawaaca gtaattacta waaattctat
+      181 tawaattawa aaacttawaa aatttacatt ataataccat awaaatataa aaaatawtaw
+      241 tattattaca aatwatawtt taat
+//
+

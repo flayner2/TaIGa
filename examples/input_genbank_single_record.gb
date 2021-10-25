@@ -1,0 +1,119 @@
+LOCUS       NC_037639               2382 bp    DNA     linear   CON 19-SEP-2018
+DEFINITION  Apis mellifera strain DH4 linkage group LG2, Amel_HAv3.1, whole
+            genome shotgun sequence.
+ACCESSION   NC_037639 REGION: complement(258539..260920)
+VERSION     NC_037639.1
+DBLINK      BioProject: PRJNA477511
+            BioSample: SAMN09259743
+            Assembly: GCF_003254395.2
+KEYWORDS    WGS; RefSeq.
+SOURCE      Apis mellifera (honey bee)
+  ORGANISM  Apis mellifera
+            Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta;
+            Pterygota; Neoptera; Holometabola; Hymenoptera; Apocrita; Aculeata;
+            Apoidea; Apidae; Apis.
+COMMENT     REFSEQ INFORMATION: The reference sequence is identical to
+            CM009932.2.
+            Assembly name: Amel_HAv3.1
+            The genomic sequence for this RefSeq record is from the
+            whole-genome assembly released by the Uppsala University on
+            2018/09/10. The original whole-genome shotgun project has the
+            accession QIUM00000000.2.
+            
+            ##Genome-Assembly-Data-START##
+            Assembly Provider      :: Uppsala University
+            Assembly Date          :: 20-MAY-2018
+            Assembly Method        :: FALCON v. 0.5.0; Arcs v. 1.0.1; Links v.
+                                      1.8.5; BioNano Solve v. 3.1
+            Polishing Method       :: Pilon v. 1.22
+            Assembly Name          :: Amel_HAv3.1
+            Genome Representation  :: Full
+            Expected Final Version :: Yes
+            Genome Coverage        :: 192.0x
+            Sequencing Technology  :: PacBio; 10X Chromium; Phase Genomics HiC;
+                                      Bionano
+            ##Genome-Assembly-Data-END##
+            
+            ##Genome-Annotation-Data-START##
+            Annotation Provider         :: NCBI
+            Annotation Status           :: Full annotation
+            Annotation Name             :: Apis mellifera Annotation Release
+                                           104
+            Annotation Version          :: 104
+            Annotation Pipeline         :: NCBI eukaryotic genome annotation
+                                           pipeline
+            Annotation Software Version :: 8.1
+            Annotation Method           :: Best-placed RefSeq; Gnomon
+            Features Annotated          :: Gene; mRNA; CDS; ncRNA
+            ##Genome-Annotation-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..2382
+                     /organism="Apis mellifera"
+                     /mol_type="genomic DNA"
+                     /strain="DH4"
+                     /isolation_source="bee hive"
+                     /db_xref="taxon:7460"
+                     /sex="male"
+                     /tissue_type="whole body"
+                     /country="USA"
+                     /collection_date="2003"
+                     /linkage_group="LG2"
+     gene            1..2382
+                     /gene="LOC113219430"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon."
+                     /db_xref="GeneID:113219430"
+     ncRNA           join(1..185,1386..1448,2094..2382)
+                     /ncRNA_class="lncRNA"
+                     /gene="LOC113219430"
+                     /product="uncharacterized LOC113219430"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon. Supporting evidence
+                     includes similarity to: 100% coverage of the annotated
+                     genomic feature by RNAseq alignments, including 18 samples
+                     with support for all annotated introns"
+                     /transcript_id="XR_003306565.1"
+                     /db_xref="GeneID:113219430"
+ORIGIN      
+        1 tttcatgtat agaaatttat attatacttc aattttcgcg ccgttaaaat aactaggaaa
+       61 ctacttcaac caatcaaaaa attgctaaag aactccaaca aagcaaatca gtatacatca
+      121 tagtgcgcat gtcatcagtc tagtagttga aaagcattgt gacagataga tgtttcattt
+      181 taccggtaaa tgtgcataat tatataaaat ttttattgat aacatattat attacaatta
+      241 ttaagtttaa ttatagatta ctaagccttg tttaattaat atttataata tttatagtat
+      301 aatcactatt atatttatta tgatgttttt atgacaaatt atcgtttaat ttttcgaacg
+      361 tgggatggct ttgaaaatat aatagttttt gtacacatca tcacaattaa aaaaataatt
+      421 taactttcat gcaaataatg attttattta ttttaataga aatatagttt ttataaagtt
+      481 ttcttttgtc tttttattca tgtaaaaata gaagtaatga aatcgatcat tataatcgat
+      541 ttacatatat ttttatgtac atcttttata aatgtgttct atctacttat attttttttt
+      601 ttgtgaccca aggttgaaaa agtttcttat agttcagttt ttccaagaaa ttgatggttt
+      661 tcattcgtgc catgttcgac atttctaatt tatcgaatta ttgagcatat tctctcctca
+      721 ctttgtaatt cgatacatcg aaatcgcggg atttgtcatt ttgttatcga aactcatgac
+      781 agttaaatgc tttgtttcaa atacatgacc tatctattgc gtaattattt gatagttatt
+      841 tcaagttatt tctttgcttc ttattgacta ttattttact aatatgcatt gttcgattta
+      901 tttattgaat attattataa aaaatataat tttttgaaga ataatttgta aaaattttcg
+      961 aatatttcta atacattaaa tatttctcta tattttttaa ataataactg taattaaatt
+     1021 taattataat aaacatacat aaaatcaaaa taaatgctta ttcattgatt atacaacata
+     1081 aatggatgca tttaatagtt ttctattttt attttaaata ttttaaatat tcattttcaa
+     1141 catacaataa aatcgatgct ttccttaaaa gaataaggta attattcatc gaagtaatta
+     1201 ttgaagaaat aattatcatt ttttctatct aaatttttat tcttctatta gaaaatagag
+     1261 acattaaaaa attctaattt ttaaatttta aatttttatt taacttttat tatcattaca
+     1321 tctcattaaa aattcaattt tcattattac atttgtaaat tataatgttt cattctttgt
+     1381 tatagatatt tctcagcttt catgattttt gacaggactg attaaatgca aattcttcgc
+     1441 atctaatggt aattatgcat tttaatttct ttggttacta gaacatattg taagatgaaa
+     1501 agttcaaatt aattagttat atatatataa ttttacgtaa tataatgatc gtaaatattt
+     1561 attatacttg taataacatt atctttttct ccattttatt tattagttta attagctaat
+     1621 tatataaata tattctatta tatttaaatt aataattttt tctgtaaaat attaaaatct
+     1681 caagtttatt acatataaaa aaaataaaat atgaaataga ataataaata gaataataag
+     1741 attatataaa atcaatagtt cgtcagatac gaatatttat actaattcat ttttttatct
+     1801 caggatttaa tcgcattcat taccaagatt tcatttgtcc aagttaaata ggataagata
+     1861 aaagcgatag acatgatgat tataaattag cttaatttga atttttgaat aatttttttt
+     1921 tatctattta ttatttaaaa ttgaatttat tttctttatt atattattct ttatattata
+     1981 ttagtgttgc aattaaaata ttaaaatatt ttaaatagat atttaaaata gttttgcgtg
+     2041 atgcgttgat gaatgatttt atgatgtttt ttacaataat gttgcatttt cagattggct
+     2101 atattttttt cacttagatt atggaagtat gttcctgatt actaattgta actaaaaaac
+     2161 tgcacaaaag tggttgtatt gcgatagtct ctgtaatttt ccgctattag tattgcgtat
+     2221 aacgaaatgt gagtggtaaa atttcgtaaa taagacattt tactgaatat atgtttttgc
+     2281 aattttttta tcttcttttt tttgatgtca tttttatgta ttaatattgc aaaaatcatt
+     2341 tataattttt tttaggttta cattaagtga ataattattt ta
+//
+
