@@ -32,6 +32,28 @@ def test_parse_names_text_file():
     assert helpers.batch_assert_objects(result, expected, "name", False)
 
 
+def test_parse_ids_text_file():
+    result = parsers.parse_txt("examples/input_taxon_ids.txt", True)
+
+    # Order doesn't matter since `parse_txt` messes the original ordering by
+    # converting the list to a set first to remove duplicates.
+    expected = [
+        Taxon(taxon_id=9606),
+        Taxon(taxon_id=7460),
+        Taxon(taxon_id=132113),
+        Taxon(taxon_id=30195),
+        Taxon(taxon_id=9593),
+        Taxon(taxon_id=562),
+        Taxon(taxon_id=6239),
+        Taxon(taxon_id=10090),
+        Taxon(taxon_id=9796),
+        Taxon(taxon_id=9913),
+    ]
+
+    # Assert letting the helper function force the same order for both lists.
+    assert helpers.batch_assert_objects(result, expected, "taxon_id", False)
+
+
 if __name__ == "__main__":
     # Debugging
     test_parse_names_text_file()
