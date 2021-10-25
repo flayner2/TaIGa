@@ -1,7 +1,7 @@
 import sys
 import logging as log
-from . import fetchers
-from .data_models import Taxon
+import fetchers
+from data_models import Taxon
 from typing import List
 
 

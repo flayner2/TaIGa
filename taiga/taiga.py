@@ -4,8 +4,8 @@
 # Version: 2.0
 # License: MIT, check the LICENSE file in the root directory
 
-import helpers
-import taxonomy
+import common.helpers
+import common.taxonomy
 
 
 def run() -> None:

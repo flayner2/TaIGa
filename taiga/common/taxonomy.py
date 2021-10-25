@@ -1,10 +1,10 @@
 import sys
 import argparse
 import logging as log
-import parsers
-import helpers
-import retrievers
-import data_handlers
+from . import parsers
+from . import helpers
+from . import retrievers
+from . import data_handlers
 
 
 def run_taiga():
