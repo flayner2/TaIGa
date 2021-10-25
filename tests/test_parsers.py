@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 import helpers
 
 # Fix to allow relative imports
