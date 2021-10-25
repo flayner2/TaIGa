@@ -3,9 +3,10 @@ import logging as log
 import sys
 import os
 from typing import List, Set
+from ..common.data_models import Taxon
 
 
-def create_df(taxon_list: List) -> pd.DataFrame:
+def create_df(taxon_list: List[Taxon]) -> pd.DataFrame:
     """Creates a Pandas DataFrame with the information for each input taxon
 
     Parameters:
@@ -73,7 +74,7 @@ def create_df(taxon_list: List) -> pd.DataFrame:
     return frame
 
 
-def create_output(output_path: str, frame: pd.DataFrame, taxon_list: List) -> None:
+def create_output(output_path: str, frame: pd.DataFrame, taxon_list: List[Taxon]) -> None:
     """Creates the output directories (if they don't exist) and files for TaIGa
 
     Parameters:
