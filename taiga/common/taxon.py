@@ -30,12 +30,64 @@ class Taxon:
         self.classification = classification
 
     def __lt__(self, other) -> bool:
-        pass
-        # if self.taxon_id > 0 and other.taxon_id > 0:
-        # return self.taxon_id < other.taxon_id
-        # elif self.name and other.name:
-        # return self.name < other.name
-        # elif self.genome_id > 0 and
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id < other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name < other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id < other.genome_id
+
+        return False
+
+    def __le__(self, other) -> bool:
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id <= other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name <= other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id <= other.genome_id
+
+        return False
+
+    def __gt__(self, other) -> bool:
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id > other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name > other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id > other.genome_id
+
+        return False
+
+    def __ge__(self, other) -> bool:
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id >= other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name >= other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id >= other.genome_id
+
+        return False
+
+    def __eq__(self, other) -> bool:
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id == other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name == other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id == other.genome_id
+
+        return False
+
+    def __ne__(self, other) -> bool:
+        if self.has_taxon_id() and other.has_taxon_id():
+            return self.taxon_id != other.taxon_id
+        elif self.has_name() and other.has_name():
+            return self.name != other.name
+        elif self.has_genome_id() and other.has_genome_id():
+            return self.genome_id != other.genome_id
+
+        return False
 
     ###########################################################
 
