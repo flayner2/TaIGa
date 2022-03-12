@@ -11,7 +11,7 @@ from taiga.common.taxon import Taxon
 
 
 def test_parse_names_text_file():
-    result = parsers.parse_txt("examples/input_names.txt", False)
+    result = parsers.parse_txt("../examples/input_names.txt", False)
 
     # Order doesn't matter since `parse_txt` messes the original ordering by
     # converting the list to a set first to remove duplicates.
@@ -33,7 +33,7 @@ def test_parse_names_text_file():
 
 
 def test_parse_ids_text_file():
-    result = parsers.parse_txt("examples/input_taxon_ids.txt", True)
+    result = parsers.parse_txt("../examples/input_taxon_ids.txt", True)
 
     # Order doesn't matter since `parse_txt` messes the original ordering by
     # converting the list to a set first to remove duplicates.
